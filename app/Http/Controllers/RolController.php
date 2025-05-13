@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rol;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RolController extends Controller
 {
@@ -12,7 +13,6 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
         $roles = Rol::all();
         return view('roles.index')->with('roles',$roles);
     }
@@ -22,7 +22,6 @@ class RolController extends Controller
      */
     public function create()
     {
-        //
         return view('roles.create');
     }
 
@@ -31,7 +30,6 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        //
          $rol = $request->all();
          Rol::create($rol);
          return redirect()->route('roles.index');
@@ -42,9 +40,16 @@ class RolController extends Controller
      */
     public function show(string $id)
     {
-        //
         $rol=Rol::find($id);
-        return view('roles.show',compact('rol'));
+        $privilegios=DB::select("select privilegio.Funcion
+                                        from privilegio, rol, rol_privilegio
+                                        where privilegio.id = rol_privilegio.PrivilegioID 
+                                        and rol.id = rol_privilegio.RolID
+                                        and rol.id = ?", [$id]); 
+
+        return view('roles.show',compact('rol', 'privilegios'));
+
+
     }
 
     /**
@@ -52,7 +57,6 @@ class RolController extends Controller
      */
     public function edit(string $id)
     {
-        //
          $rol=Rol::find($id);
         return view('roles.edit',compact('rol'));
     }
@@ -62,7 +66,6 @@ class RolController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
         $rol=Rol::find($id);
          $rol->update($request->all());
          return redirect()->route('roles.index');
@@ -73,7 +76,6 @@ class RolController extends Controller
      */
     public function destroy(string $id)
     {
-        //
          $rol=Rol::find($id);
          $rol->delete();
          return redirect()->route('roles.index');
