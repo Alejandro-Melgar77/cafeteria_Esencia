@@ -1,60 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-</head>
+@section('content')
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-5 align-self-center">
+                <h3 class="page-title">Roles</h3>
+            </div>
+            <div class="col-7 align-self-center">
+                <div class="d-flex align-items-center justify-content-end">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#">Home</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<body>
-    @foreach ($roles as $rol)
-        {{ $rol->Cargo }}
-        <a href="{{ route('roles.edit', [$rol->id]) }}">editar</a>
-        <form method="POST" action="{{ route('roles.destroy', [$rol->id]) }}">
-            @csrf @method('DELETE')
-            <button class="btn btn-primary" type="submit" onclick="confirm('estas seguro? ')">eliminar</button>
-        </form>
-
-        <br>
-    @endforeach
-
-    <table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>John</td>
-      <td>Doe</td>
-      <td>@social</td>
-    </tr>
-  </tbody>
-</table>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+    <div class="col-12 p-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="card-title mb-0">Roles registrados</h4>
+                    <a class="btn btn-primary" href="{{ route('roles.create') }}">Crear nuevo rol</a>
+                </div>
+            </div>
+            <div class="table-responsive table-striped p-4">
+                <table class="table table-hover text-center">
+                    <thead>
+                        <tr>
+                            <th class="border-top-0">ID</th>
+                            <th class="border-top-0">CARGO</th>
+                            <th class="border-top-0">ACCIONES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($roles as $rol)
+                            <tr>
+                                <td class="text-center align-middle">{{ $rol->id }}</td>
+                                <td class="text-center align-middle"><span>{{ $rol->Cargo }}</span></td>
+                                {{-- <td class="txt-oflo">April 19, 2021</td> --}}
+                                <td class="text-center align-middle">
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <a class="btn btn-warning" href="{{ route('roles.edit', [$rol->id]) }}">editar</a>
+                                        <form method="POST" action="{{ route('roles.destroy', [$rol->id]) }}">
+                                            @csrf @method('DELETE')
+                                            <button class="btn btn-danger" type="submit"
+                                                onclick="confirm('estas seguro?') ">eliminar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection

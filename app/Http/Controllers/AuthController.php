@@ -13,11 +13,13 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    public function formLogin() {
+    public function formLogin()
+    {
         return view("auth.login");
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $validated = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
@@ -48,12 +50,12 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
         ]);
         $user = User::create($validated);
-        $usuario = Usuario::create([ 
-            'Nombre'=> $validated['name'],
-            'Email'=> $validated['email'],
-            'Telefono'=> $request->input('telefono'),
-            'RolID'=> 1,
-            'id_user' => $user->id 
+        $usuario = Usuario::create([
+            'Nombre' => $validated['name'],
+            'Email' => $validated['email'],
+            'Telefono' => $request->input('telefono'),
+            'RolID' => 1,
+            'id_user' => $user->id
         ]);
 
         Auth::login($user);
@@ -68,19 +70,20 @@ class AuthController extends Controller
         $this->registrarBitacora("Cerrado sesion");
         Auth::logout();
         $request->session()->flash('success', 'You have been logged out.');
-        $request->invalidate();
+        // $request->invalidate();
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
     }
 
-    public function registrarBitacora($accion) {
+    public function registrarBitacora($accion)
+    {
         $usuario = DB::table('usuario')->where('id_user', Auth::user()->id)->first();
         Bitacora::create([
-                'fecha'=> now(),
-                'hora'=> Carbon::now(),
-                'accion'=> $accion,
-                'codigoUsuario'=> $usuario->id,
-            ]);
+            'fecha' => now(),
+            'hora' => Carbon::now(),
+            'accion' => $accion,
+            'codigoUsuario' => $usuario->id,
+        ]);
     }
 }

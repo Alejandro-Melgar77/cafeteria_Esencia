@@ -11,18 +11,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/cafeteria_esencia1', function () {
+Route::get('/cafeteria', function () {
     return view('cafeteria');
 })->name("cafeteria");
 
-Route::resource('roles',RolController::class);
-Route::resource('privilegios',PrivilegioController::class);
-Route::resource('clientes',ClienteController::class);
+Route::resource('roles', RolController::class);
+Route::resource('privilegios', PrivilegioController::class);
+Route::resource('clientes', ClienteController::class);
+Route::resource('personal', ClienteController::class);
+Route::resource('usuarios', ClienteController::class);
 
 Route::get('login', [AuthController::class, "formLogin"])->name("login");
 Route::post('login', [AuthController::class, "login"])->name("login.post");
+Route::post('logout', [AuthController::class, "logout"])->name("logout");
 
 Route::get('register', [AuthController::class, 'formRegister'])->name('register');
 Route::post('register', [AuthController::class, 'register'])->name('register.post');
 
-Route::get('bitacorapdf/{inicio}/{final}', [BitacoraController::class,'descargarBitacoraPdf'])->name('descargarBitacoraPdf');
+Route::get('bitacorapdf/{inicio}/{final}', [BitacoraController::class, 'descargarBitacoraPdf'])->name('descargarBitacoraPdf');
