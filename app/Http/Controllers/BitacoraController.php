@@ -72,11 +72,22 @@ class BitacoraController extends Controller
         //dd($inicio);
         $bitacora = DB::select('select *
                                         from bitacoras
-                                         where bitacoras.fecha<=? and bitacoras.fecha>=?', 
-                                         [$final, $inicio]);
+                                         where bitacoras.fecha<=? and bitacoras.fecha>=?',
+            [$final, $inicio]
+        );
 
         //dd($bitacora);
 
+        $data = [
+            "bitacora" => $bitacora,
+        ];
+        $pdf = Pdf::loadView('bitacoraPdf', $data);
+        return $pdf->download('invoice.pdf');
+    }
+    public function descargarBitacoraPdfAll()
+    {
+        $bitacora = DB::select('select *
+                                        from bitacoras');
         $data = [
             "bitacora" => $bitacora,
         ];

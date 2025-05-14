@@ -185,6 +185,13 @@
                                 </li>
                                 <li class="sidebar-item">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('descargarBitacoraPdfall') }}" aria-expanded="false">
+                                        <i class="mdi mdi-face"></i>
+                                        <span class="hide-menu">Descargar Bitacora</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                         href="{{ route('usuarios.show', [Auth::user()->id]) }}" aria-expanded="false">
                                         <i class="mdi mdi-file"></i>
                                         <span class="hide-menu">Perfil de usuario</span>

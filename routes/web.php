@@ -24,6 +24,8 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
     Route::resource('privilegios', PrivilegioController::class);
     Route::get('bitacorapdf/{inicio}/{final}', [BitacoraController::class, 'descargarBitacoraPdf'])
         ->name('descargarBitacoraPdf');
+    Route::get('bitacorapdfall', [BitacoraController::class, 'descargarBitacoraPdfAll'])
+        ->name('descargarBitacoraPdfall');
 });
 
 // Rutas para Administrador o Personal
