@@ -28,7 +28,7 @@ class AuthController extends Controller
 
             $this->registrarBitacora("inicio de sesión");
             $request->session()->regenerate();
-            return redirect()->route('cafeteria')->with('success', 'Login successful!');
+            return redirect()->route('welcome')->with('success', 'Bienvenido!');
         }
 
         throw ValidationException::withMessages([
@@ -60,16 +60,16 @@ class AuthController extends Controller
 
         Auth::login($user);
         $this->registrarBitacora("Registro de usuario");
-        $request->session()->flash('success', 'Registration successful! You can now log in.');
+        $request->session()->flash('success', 'Registrado correctamente!');
 
-        return redirect()->route('cafeteria');
+        return redirect()->route('welcome');
     }
 
     public function logout(Request $request)
     {
         $this->registrarBitacora("Cerrado sesion");
         Auth::logout();
-        $request->session()->flash('success', 'You have been logged out.');
+        $request->session()->flash('success', 'Cerrado sesión correctamente');
         // $request->invalidate();
         $request->session()->regenerateToken();
 

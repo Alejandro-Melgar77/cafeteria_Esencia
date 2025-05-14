@@ -1,18 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <form method="POST" action={{route('roles.update',[$rol->id])}}>
-        @csrf
-        @method('PUT')
-    <input name="Cargo" value="{{$rol->Cargo}}">
-    <button type="submit"> modificar</button>
+@extends('layouts.app')
 
-    </form>
-</body>
-</html>
+@section('content')
+    <div class="col-12 py-4">
+        <div class="card">
+            <div class="card-body col-lg-6">
+                <h4 class="card-title">Editar rol # {{ $rol->id }}</h4>
+                <form action="{{ route('roles.update', [$rol->id]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class=" mb-3">
+                        <label for="Cargo" class="form-label">Cargo</label>
+                        <input type="text" class="form-control" id="Cargo" name="Cargo" required
+                            value="{{ $rol->Cargo }}">
+                    </div>
+                    <button type="submit" class="btn btn-primary float-end">Modificar rol</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+@endsection

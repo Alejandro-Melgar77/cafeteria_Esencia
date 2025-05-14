@@ -95,8 +95,9 @@
 
                         @if (Route::has('login'))
                             @auth
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+                                <li class="nav-item px-2 py-2">
+                                    <span>Bienvenido, {{ Auth::user()->name }}</span>
+                                    {{-- <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
                                         href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
                                         aria-expanded="false">
                                         <img src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle"
@@ -112,7 +113,7 @@
                                         <a class="dropdown-item" href="javascript:void(0)"><i
                                                 class="ti-email me-1 ms-1"></i>
                                             Mensajes</a>
-                                    </ul>
+                                    </ul> --}}
                                 </li>
                             @else
                                 <li class="nav-item">
@@ -146,58 +147,108 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         @auth
-                            <li class="sidebar-item">
-                                <a class="sidebar-link" href="{{ url('/') }}" aria-expanded="false">
-                                    <i class="mdi mdi-av-timer"></i>
-                                    <span class="hide-menu">Panel</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="{{ route('roles.index') }}" aria-expanded="false">
-                                    <i class="mdi mdi-account-network"></i>
-                                    <span class="hide-menu">Gestionar Roles</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="{{ route('privilegios.index') }}" aria-expanded="false">
-                                    <i class="mdi mdi-arrange-bring-forward"></i>
-                                    <span class="hide-menu">Gestionar Privilegios</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="{{ route('clientes.index') }}" aria-expanded="false">
-                                    <i class="mdi mdi-border-none"></i>
-                                    <span class="hide-menu">Gestionar Clientes</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="{{ route('personal.index') }}" aria-expanded="false">
-                                    <i class="mdi mdi-face"></i>
-                                    <span class="hide-menu">Gestionar Personal</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                    href="{{ route('usuarios.show', [Auth::user()->id]) }}" aria-expanded="false">
-                                    <i class="mdi mdi-file"></i>
-                                    <span class="hide-menu">Perfil de usuario</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item">
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button style="background: none; border: 0px;"
-                                        class="sidebar-link waves-effect waves-dark sidebar-link"
-                                        href="{{ route('logout') }}" aria-expanded="false">
-                                        <i class="mdi mdi-alert-outline"></i>
-                                        <span class="hide-menu">Cerrar sesión</span>
-                                    </button>
-                                </form>
-                            </li>
+                            <?php $rol = DB::select('select rol.Cargo from rol, usuario, users where usuario.id = users.id and usuario.RolID=rol.id and users.id=?', [Auth::user()->id]); ?>
+                            @if ($rol[0]->Cargo == 'Administrador')
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="{{ url('/') }}" aria-expanded="false">
+                                        <i class="mdi mdi-av-timer"></i>
+                                        <span class="hide-menu">Panel</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('roles.index') }}" aria-expanded="false">
+                                        <i class="mdi mdi-account-network"></i>
+                                        <span class="hide-menu">Gestionar Roles</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('privilegios.index') }}" aria-expanded="false">
+                                        <i class="mdi mdi-arrange-bring-forward"></i>
+                                        <span class="hide-menu">Gestionar Privilegios</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('clientes.index') }}" aria-expanded="false">
+                                        <i class="mdi mdi-border-none"></i>
+                                        <span class="hide-menu">Gestionar Clientes</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('personal.index') }}" aria-expanded="false">
+                                        <i class="mdi mdi-face"></i>
+                                        <span class="hide-menu">Gestionar Personal</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('usuarios.show', [Auth::user()->id]) }}" aria-expanded="false">
+                                        <i class="mdi mdi-file"></i>
+                                        <span class="hide-menu">Perfil de usuario</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button style="background: none; border: 0px;"
+                                            class="sidebar-link waves-effect waves-dark sidebar-link"
+                                            href="{{ route('logout') }}" aria-expanded="false">
+                                            <i class="mdi mdi-alert-outline"></i>
+                                            <span class="hide-menu">Cerrar sesión</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            @endif
+                            @if ($rol[0]->Cargo == 'Personal')
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('clientes.index') }}" aria-expanded="false">
+                                        <i class="mdi mdi-border-none"></i>
+                                        <span class="hide-menu">Gestionar Clientes</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('usuarios.show', [Auth::user()->id]) }}" aria-expanded="false">
+                                        <i class="mdi mdi-file"></i>
+                                        <span class="hide-menu">Perfil de usuario</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button style="background: none; border: 0px;"
+                                            class="sidebar-link waves-effect waves-dark sidebar-link"
+                                            href="{{ route('logout') }}" aria-expanded="false">
+                                            <i class="mdi mdi-alert-outline"></i>
+                                            <span class="hide-menu">Cerrar sesión</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            @endif
+                            @if ($rol[0]->Cargo == 'Cliente')
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('usuarios.show', [Auth::user()->id]) }}" aria-expanded="false">
+                                        <i class="mdi mdi-file"></i>
+                                        <span class="hide-menu">Perfil de usuario</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button style="background: none; border: 0px;"
+                                            class="sidebar-link waves-effect waves-dark sidebar-link"
+                                            href="{{ route('logout') }}" aria-expanded="false">
+                                            <i class="mdi mdi-alert-outline"></i>
+                                            <span class="hide-menu">Cerrar sesión</span>
+                                        </button>
+                                    </form>
+                                </li>
+                            @endif
                         @else
                             <li class="sidebar-item">
                                 <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('login') }}"
@@ -222,7 +273,8 @@
         </aside>
 
         <div class="page-wrapper">
-            <div class="col-12">
+            <div class="col-12 px-4 py-3">
+                @include('partials.alert')
                 @yield('content')
             </div>
 

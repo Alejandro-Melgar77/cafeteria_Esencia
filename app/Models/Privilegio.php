@@ -9,6 +9,5 @@ class Privilegio extends Model
     //
     protected $table = "privilegio";
     protected $fillable = ["Funcion"];
-    public $timestamps = false;
-    
+
 }

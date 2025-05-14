@@ -14,7 +14,7 @@ class RolController extends Controller
     public function index()
     {
         $roles = Rol::all();
-        return view('roles.index')->with('roles',$roles);
+        return view('roles.index')->with('roles', $roles);
     }
 
     /**
@@ -30,9 +30,13 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-         $rol = $request->all();
-         Rol::create($rol);
-         return redirect()->route('roles.index');
+        try {
+            $rol = $request->all();
+            Rol::create($rol);
+            return redirect()->route('roles.index')->with('success', 'Rol creado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->route('roles.index')->with('danger', 'Error al crear el rol: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -40,14 +44,14 @@ class RolController extends Controller
      */
     public function show(string $id)
     {
-        $rol=Rol::find($id);
-        $privilegios=DB::select("select privilegio.Funcion
+        $rol = Rol::find($id);
+        $privilegios = DB::select("select privilegio.Funcion
                                         from privilegio, rol, rol_privilegio
                                         where privilegio.id = rol_privilegio.PrivilegioID 
                                         and rol.id = rol_privilegio.RolID
-                                        and rol.id = ?", [$id]); 
+                                        and rol.id = ?", [$id]);
 
-        return view('roles.show',compact('rol', 'privilegios'));
+        return view('roles.show', compact('rol', 'privilegios'));
 
 
     }
@@ -57,8 +61,8 @@ class RolController extends Controller
      */
     public function edit(string $id)
     {
-         $rol=Rol::find($id);
-        return view('roles.edit',compact('rol'));
+        $rol = Rol::find($id);
+        return view('roles.edit', compact('rol'));
     }
 
     /**
@@ -66,9 +70,13 @@ class RolController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $rol=Rol::find($id);
-         $rol->update($request->all());
-         return redirect()->route('roles.index');
+        try {
+            $rol = Rol::find($id);
+            $rol->update($request->all());
+            return redirect()->route('roles.index')->with('success', 'Rol actualizado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->route('roles.index')->with('danger', 'Error al actualizar el rol: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -76,8 +84,12 @@ class RolController extends Controller
      */
     public function destroy(string $id)
     {
-         $rol=Rol::find($id);
-         $rol->delete();
-         return redirect()->route('roles.index');
+        try {
+            $rol = Rol::find($id);
+            $rol->delete();
+            return redirect()->route('roles.index')->with('success', 'Rol eliminado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->route('roles.index')->with('danger', 'Error al eliminar el rol: ' . $e->getMessage());
+        }
     }
 }
