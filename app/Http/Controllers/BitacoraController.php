@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Bitacora;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -82,7 +83,7 @@ class BitacoraController extends Controller
             "bitacora" => $bitacora,
         ];
         $pdf = Pdf::loadView('bitacoraPdf', $data);
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('Reporte-'.Carbon::now().'.pdf');
     }
     public function descargarBitacoraPdfAll()
     {
@@ -92,6 +93,6 @@ class BitacoraController extends Controller
             "bitacora" => $bitacora,
         ];
         $pdf = Pdf::loadView('bitacoraPdf', $data);
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('Reporte-'.Carbon::now().'.pdf');
     }
 }

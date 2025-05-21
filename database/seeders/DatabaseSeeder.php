@@ -15,13 +15,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Rol::create([
+       Rol::create([
             'Cargo' => 'Cliente',
         ]);
-        Rol::create([
+        $rol_empleado = Rol::create([
             'Cargo' => 'Personal',
         ]);
-        $rol = Rol::create([
+        $rol_admin = Rol::create([
             'Cargo' => 'Administrador',
         ]);
 
@@ -35,8 +35,22 @@ class DatabaseSeeder extends Seeder
             'Nombre' => 'Admin',
             'Email' => 'admin@gmail.com',
             'Telefono' => 12345678,
-            'RolID' => $rol->id,
+            'RolID' => $rol_admin->id,
             'id_user' => $user->id,
+        ]);
+
+        $personal = User::create([
+            'name' => 'Personal',
+            'email' => 'personal@gmail.com',
+            'password' => bcrypt('personal'),
+        ]);
+
+        Usuario::create([
+            'Nombre' => 'Personal',
+            'Email' => 'personal@gmail.com',
+            'Telefono' => 12345678,
+            'RolID' => $rol_empleado->id,
+            'id_user' => $personal->id,
         ]);
     }
 }
