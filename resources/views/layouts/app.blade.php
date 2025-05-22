@@ -147,7 +147,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         @auth
-                            <?php $rol = DB::select('select rol.Cargo from rol, usuario, users where usuario.id = users.id and usuario.RolID=rol.id and users.id=?', [Auth::user()->id]); ?>
+                            <?php $rol = DB::select('select Rol.Cargo from Rol, usuario, users where usuario.id = users.id and usuario.RolID=Rol.id and users.id=?', [Auth::user()->id]); ?>
                             @if ($rol[0]->Cargo == 'Administrador')
                                 <li class="sidebar-item">
                                     <a class="sidebar-link" href="{{ url('/') }}" aria-expanded="false">
