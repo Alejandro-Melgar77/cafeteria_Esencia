@@ -3,7 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\IngredienteController;
+use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PrivilegioController;
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\RolController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsPersonalMiddleware;
@@ -33,6 +36,9 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::resource('clientes', ClienteController::class);
     Route::resource('personal', ClienteController::class);
     Route::resource('usuarios', ClienteController::class);
+    Route::resource('inventarios', InventarioController::class);
+    Route::resource('productos', ProductoController::class);
+    Route::resource('ingredientes', IngredienteController::class);
 });
 
 // Rutas para Clientes e invitados

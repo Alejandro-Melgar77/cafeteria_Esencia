@@ -186,8 +186,15 @@
                                 <li class="sidebar-item">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                         href="{{ route('descargarBitacoraPdfall') }}" aria-expanded="false">
-                                        <i class="mdi mdi-face"></i>
+                                        <i class="mdi mdi-account-file-text"></i>
                                         <span class="hide-menu">Descargar Bitacora</span>
+                                    </a>
+                                </li>
+                                 <li class="sidebar-item">
+                                    <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                        href="{{ route('inventarios.index') }}" aria-expanded="false">
+                                        <i class="mdi mdi-alarm-panel"></i>
+                                        <span class="hide-menu">Administrar Inventario</span>
                                     </a>
                                 </li>
                                 <li class="sidebar-item">
