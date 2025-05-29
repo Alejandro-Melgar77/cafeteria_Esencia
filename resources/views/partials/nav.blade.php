@@ -13,6 +13,7 @@
             'Gestionar ingredientes' => 'ingredientes.index',
             'Gestionar bitacoras' => 'bitacoras.index',
             'Gestionar proveedores' => 'proveedores.index',
+            'Gestionar recetas' => 'recetas.index',
         ],
         'personal' => [
             'Inicio' => 'dashboard',
@@ -23,6 +24,7 @@
             'Gestionar productos' => 'productos.index',
             'Gestionar ingredientes' => 'ingredientes.index',
             'Gestionar proveedores' => 'proveedores.index',
+            'Gestionar recetas' => 'recetas.index',
         ],
         'cliente' => [
             'Inicio' => 'dashboard',

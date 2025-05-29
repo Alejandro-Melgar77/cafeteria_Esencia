@@ -33,7 +33,6 @@ class ProductoController extends Controller
     {
         $inventarioValidated = $request->validate([
             "nombre" => ["required", "string", "max:100"],
-            "fecha_vco" => ["date"],
             "costo" => ["required", "numeric", "min:0"],
             "stock" => ["required", "integer", "min:0"],
         ]);
@@ -94,7 +93,6 @@ class ProductoController extends Controller
         $request->validate([
             'nombre' => 'required|max:100',
             'costo' => 'required|numeric|min:0',
-            'fecha_vto' => 'date',
             'stock' => 'required|integer|min:0'
         ]);
         $request->validate([

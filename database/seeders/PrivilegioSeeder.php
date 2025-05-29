@@ -59,6 +59,13 @@ class PrivilegioSeeder extends Seeder
             ['Funcion' => 'editar proveedores'],
             ['Funcion' => 'eliminar proveedores'],
 
+            ['Funcion' => 'ver recetas'],
+            ['Funcion' => 'crear recetas'],
+            ['Funcion' => 'editar recetas'],
+            ['Funcion' => 'eliminar recetas'],
+
+            ['Funcion' => 'ver bitacoras'],
+
         ]);
     }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PrivilegioController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\RolController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsPersonalMiddleware;
@@ -117,6 +118,15 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::get('proveedores/{id}/edit', [ProveedorController::class, 'edit'])->middleware('permiso:editar proveedores')->name('proveedores.edit');
     Route::put('proveedores/{id}', [ProveedorController::class, 'update'])->middleware('permiso:editar proveedores')->name('proveedores.update');
     Route::delete('proveedores/{id}', [ProveedorController::class, 'destroy'])->middleware('permiso:eliminar proveedores')->name('proveedores.destroy');
+
+    // Recetas
+    Route::get('recetas', [RecetaController::class, 'index'])->middleware('permiso:ver recetas')->name('recetas.index');
+    Route::get('recetas/create', [RecetaController::class, 'create'])->middleware('permiso:crear recetas')->name('recetas.create');
+    Route::post('recetas', [RecetaController::class, 'store'])->middleware('permiso:crear recetas')->name('recetas.store');
+    Route::get('recetas/{id}', [RecetaController::class, 'show'])->middleware('permiso:ver recetas')->name('recetas.show');
+    Route::get('recetas/{id}/edit', [RecetaController::class, 'edit'])->middleware('permiso:editar recetas')->name('recetas.edit');
+    Route::put('recetas/{id}', [RecetaController::class, 'update'])->middleware('permiso:editar recetas')->name('recetas.update');
+    Route::delete('recetas/{id}', [RecetaController::class, 'destroy'])->middleware('permiso:eliminar recetas')->name('recetas.destroy');
 
 });
 

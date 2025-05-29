@@ -131,9 +131,11 @@
                 </table>
             </div>
 
-            <div class="mt-4">
-                {{ $ingredientes->links('vendor.pagination.tailwind') }}
-            </div>
+            @if ($ingredientes->hasPages())
+                <div class="mt-4">
+                    {{ $ingredientes->links('vendor.pagination.tailwind') }}
+                </div>
+            @endif
         </div>
     </div>
 @endsection
