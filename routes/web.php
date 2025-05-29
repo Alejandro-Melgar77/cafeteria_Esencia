@@ -83,13 +83,13 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::delete('personal/{id}', [PersonalController::class, 'destroy'])->middleware('permiso:eliminar personal')->name('personal.destroy');
 
     // Inventario
-    Route::get('inventarios', [InventarioController::class, 'index'])->middleware('permiso:ver inventario')->name('inventarios.index');
-    Route::get('inventarios/create', [InventarioController::class, 'create'])->middleware('permiso:crear inventario')->name('inventarios.create');
-    Route::post('inventarios', [InventarioController::class, 'store'])->middleware('permiso:crear inventario')->name('inventarios.store');
-    Route::get('inventarios/{id}', [InventarioController::class, 'show'])->middleware('permiso:ver inventario')->name('inventarios.show');
-    Route::get('inventarios/{id}/edit', [InventarioController::class, 'edit'])->middleware('permiso:editar inventario')->name('inventarios.edit');
-    Route::put('inventarios/{id}', [InventarioController::class, 'update'])->middleware('permiso:editar inventario')->name('inventarios.update');
-    Route::delete('inventarios/{id}', [InventarioController::class, 'destroy'])->middleware('permiso:eliminar inventario')->name('inventarios.destroy');
+    Route::get('inventarios', [InventarioController::class, 'index'])->middleware('permiso:ver inventarios')->name('inventarios.index');
+    Route::get('inventarios/create', [InventarioController::class, 'create'])->middleware('permiso:crear inventarios')->name('inventarios.create');
+    Route::post('inventarios', [InventarioController::class, 'store'])->middleware('permiso:crear inventarios')->name('inventarios.store');
+    Route::get('inventarios/{id}', [InventarioController::class, 'show'])->middleware('permiso:ver inventarios')->name('inventarios.show');
+    Route::get('inventarios/{id}/edit', [InventarioController::class, 'edit'])->middleware('permiso:editar inventarios')->name('inventarios.edit');
+    Route::put('inventarios/{id}', [InventarioController::class, 'update'])->middleware('permiso:editar inventarios')->name('inventarios.update');
+    Route::delete('inventarios/{id}', [InventarioController::class, 'destroy'])->middleware('permiso:eliminar inventarios')->name('inventarios.destroy');
 
     // Ingredientes
     Route::get('ingredientes', [IngredienteController::class, 'index'])->middleware('permiso:ver ingredientes')->name('ingredientes.index');
