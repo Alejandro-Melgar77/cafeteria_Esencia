@@ -10,14 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('rol_privilegio', function (Blueprint $table) {
+        Schema::create('roles_privilegios', function (Blueprint $table) {
             $table->primary(['RolID', 'PrivilegioID']);
-            // "RolID", "PrivilegioID"
             $table->unsignedBigInteger('RolID');
             $table->unsignedBigInteger('PrivilegioID');
-            $table->foreign('RolID')->references('id')->on('Rol');
-            $table->foreign('PrivilegioID')->references('id')->on('privilegio');
-
+            $table->foreign('RolID')->references('id')->on('roles');
+            $table->foreign('PrivilegioID')->references('id')->on('privilegios');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('rol_privilegios');
+        Schema::dropIfExists('roles_privilegios');
     }
 };

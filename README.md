@@ -21,8 +21,8 @@ npm install
 Usar los siguiente comandos para crear la base de datos, desde las migraciones y el llenado de los datos iniciales.
 
 ```
-php artisan migrate:fresh
-php artisan db:seed --class=DatabaseSeeder
+php artisan migrate:fresh --seed --seeder=DatabaseSeeder
+php key:generate
 ```
 
 ## Iniciar servidor local

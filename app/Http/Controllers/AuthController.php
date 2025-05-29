@@ -28,11 +28,11 @@ class AuthController extends Controller
 
             $this->registrarBitacora("inicio de sesión");
             $request->session()->regenerate();
-            return redirect()->route('welcome')->with('success', 'Bienvenido!');
+            return redirect()->route('dashboard')->with('success', 'Bienvenido!');
         }
 
         throw ValidationException::withMessages([
-            'credentials' => 'The provided credentials do not match our records.',
+            'credentials' => 'Las credenciales proporcionadas no coinciden con nuestros registros',
         ]);
     }
 
@@ -43,9 +43,9 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        //dd($request->all());
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:100',
+            'telefono' => 'required|string|max:15',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ]);
@@ -53,8 +53,8 @@ class AuthController extends Controller
         $usuario = Usuario::create([
             'Nombre' => $validated['name'],
             'Email' => $validated['email'],
-            'Telefono' => $request->input('telefono'),
-            'RolID' => 1,
+            'Telefono' => $validated['telefono'],
+            'RolID' => 3,
             'id_user' => $user->id
         ]);
 
@@ -62,7 +62,7 @@ class AuthController extends Controller
         $this->registrarBitacora("Registro de usuario");
         $request->session()->flash('success', 'Registrado correctamente!');
 
-        return redirect()->route('welcome');
+        return redirect()->route('dashboard')->with('success', 'Bienvenido!');
     }
 
     public function logout(Request $request)
@@ -78,7 +78,7 @@ class AuthController extends Controller
 
     public function registrarBitacora($accion)
     {
-        $usuario = DB::table('usuario')->where('id_user', Auth::user()->id)->first();
+        $usuario = DB::table('usuarios')->where('id_user', Auth::user()->id)->first();
         Bitacora::create([
             'fecha' => now(),
             'hora' => Carbon::now(),

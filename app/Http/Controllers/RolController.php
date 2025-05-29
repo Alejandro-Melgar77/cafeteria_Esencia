@@ -13,7 +13,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles = Rol::all();
+        $roles = Rol::paginate(10);
         return view('roles.index')->with('roles', $roles);
     }
 
@@ -30,12 +30,15 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'Cargo' => 'required|string|max:40',
+        ]);
         try {
             $rol = $request->all();
             Rol::create($rol);
             return redirect()->route('roles.index')->with('success', 'Rol creado correctamente');
         } catch (\Exception $e) {
-            return redirect()->route('roles.index')->with('danger', 'Error al crear el rol: ' . $e->getMessage());
+            return redirect()->route('roles.index')->with('danger', 'Error al crear el rol: ' . $e->getMessage())->withInput();
         }
     }
 
@@ -45,11 +48,11 @@ class RolController extends Controller
     public function show(string $id)
     {
         $rol = Rol::find($id);
-        $privilegios = DB::select("select privilegio.Funcion
-                                        from privilegio, rol, rol_privilegio
-                                        where privilegio.id = rol_privilegio.PrivilegioID 
-                                        and rol.id = rol_privilegio.RolID
-                                        and rol.id = ?", [$id]);
+        $privilegios = DB::select("select privilegios.Funcion
+                                        from privilegios, roles, roles_privilegios
+                                        where privilegios.id = roles_privilegios.PrivilegioID 
+                                        and roles.id = roles_privilegios.RolID
+                                        and roles.id = ?", [$id]);
 
         return view('roles.show', compact('rol', 'privilegios'));
 
@@ -70,6 +73,9 @@ class RolController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'Cargo' => 'required|string|max:40',
+        ]);
         try {
             $rol = Rol::find($id);
             $rol->update($request->all());

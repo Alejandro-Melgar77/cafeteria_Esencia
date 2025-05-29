@@ -6,15 +6,23 @@ use App\Models\Privilegio;
 use App\Models\Rol;
 use App\Models\RolPrivilegio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PrivilegioController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $privilegios = Privilegio::all();
+        $query = DB::table('privilegios');
+
+        if ($request->filled('buscar')) {
+            $query->where('Funcion', 'LIKE', '%' . $request->buscar . '%');
+        }
+
+        $privilegios = $query->paginate(10)->withQueryString();
+
         return view('privilegios.index', compact('privilegios'));
     }
 
@@ -32,17 +40,21 @@ class PrivilegioController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
+        $request->validate([
+            'Funcion' => 'required|max:100',
+            'Caracteristica' => 'required|max:100',
+            'rol' => 'array',
+        ]);
         try {
-            // dd($request->all());
             $privilegio = Privilegio::create([
-                'Funcion' => $request->input('Funcion'),
+                'Funcion' => $request->Funcion . " " . $request->Caracteristica,
             ]);
 
-            $roles = $request->get('rol');
-            //dd($roles);
-            foreach ($roles as $rol => $key) {
-                $rol_privilegio = RolPrivilegio::create([
-                    'RolID' => $key,
+            $roles = $request->get('rol', []);
+            foreach ($roles as $rol_id) {
+                RolPrivilegio::create([
+                    'RolID' => $rol_id,
                     'PrivilegioID' => $privilegio->id
                 ]);
             }
@@ -80,7 +92,7 @@ class PrivilegioController extends Controller
         try {
             $privilegio = Privilegio::find($id);
             $privilegio->update([
-                'Funcion' => $request->input('Funcion'),
+                'Funcion' => $request->Funcion . " " . $request->Caracteristica,
             ]);
 
             // Eliminar privilegios existentes
@@ -105,12 +117,15 @@ class PrivilegioController extends Controller
      */
     public function destroy(string $id)
     {
+        // $rol_privilegios = DB::table('roles_privilegios')
+        //     ->where('PrivilegioID', $id)
+        //     ->get();
+        // dd($rol_privilegios);
         try {
-            foreach (RolPrivilegio::where('PrivilegioID', $id)->get() as $rol_privilegio) {
-                $rol_privilegio->delete();
-            }
-            $privilegio = Privilegio::find($id);
+            RolPrivilegio::where('PrivilegioID', $id)->delete();
+            $privilegio = Privilegio::findOrFail($id);
             $privilegio->delete();
+
             return redirect()->route('privilegios.index')->with('success', 'Privilegio eliminado correctamente');
         } catch (\Exception $e) {
             return redirect()->route('privilegios.index')->with('danger', 'Error al eliminar el privilegio: ' . $e->getMessage());

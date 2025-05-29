@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->time('hora');
             $table->string('accion');
             $table->unsignedBigInteger('codigoUsuario');
-            $table->foreign('codigoUsuario')->references('id')->on('usuario');
+            $table->foreign('codigoUsuario')->references('id')->on('usuarios');
             $table->timestamps();
         });
     }

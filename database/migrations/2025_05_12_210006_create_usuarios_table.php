@@ -10,17 +10,15 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('usuario', function (Blueprint $table) {
+        Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
-            //"Nombre", "Email", 'Telefono', 'RolID', "id_user", "codigo"
             $table->string('Nombre');
             $table->string('Email')->unique();
             $table->string('Telefono');
             $table->unsignedBigInteger('RolID');
-            $table->foreign('RolID')->references('id')->on('Rol');
             $table->unsignedBigInteger('id_user')->nullable();
+            $table->foreign('RolID')->references('id')->on('roles');
             $table->foreign('id_user')->references('id')->on('users');
-
             $table->timestamps();
         });
     }

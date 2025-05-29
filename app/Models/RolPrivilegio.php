@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class RolPrivilegio extends Model
 {
     //
-    protected $table = "rol_privilegio";
+    protected $table = "roles_privilegios";
+
+
     protected $fillable = ["RolID", "PrivilegioID"];
+
 }

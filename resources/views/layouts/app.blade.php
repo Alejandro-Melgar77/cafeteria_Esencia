@@ -147,8 +147,7 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         @auth
-                            <?php $rol = DB::select('select Rol.Cargo from Rol, usuario, users where usuario.id = users.id and usuario.RolID=Rol.id and users.id=?', [Auth::user()->id]); ?>
-                            @if ($rol[0]->Cargo == 'Administrador')
+                            @if (Auth::user()->usuario->rol->Cargo == 'administrador')
                                 <li class="sidebar-item">
                                     <a class="sidebar-link" href="{{ url('/') }}" aria-expanded="false">
                                         <i class="mdi mdi-av-timer"></i>
@@ -190,7 +189,7 @@
                                         <span class="hide-menu">Descargar Bitacora</span>
                                     </a>
                                 </li>
-                                 <li class="sidebar-item">
+                                <li class="sidebar-item">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                         href="{{ route('inventarios.index') }}" aria-expanded="false">
                                         <i class="mdi mdi-alarm-panel"></i>
@@ -216,7 +215,7 @@
                                     </form>
                                 </li>
                             @endif
-                            @if ($rol[0]->Cargo == 'Personal')
+                            @if (Auth::user()->usuario->rol->Cargo == 'personal')
                                 <li class="sidebar-item">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                         href="{{ route('clientes.index') }}" aria-expanded="false">
@@ -243,7 +242,7 @@
                                     </form>
                                 </li>
                             @endif
-                            @if ($rol[0]->Cargo == 'Cliente')
+                            @if (Auth::user()->usuario->rol->Cargo == 'cliente')
                                 <li class="sidebar-item">
                                     <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                         href="{{ route('usuarios.show', [Auth::user()->id]) }}" aria-expanded="false">

@@ -15,7 +15,7 @@ class BitacoraController extends Controller
      */
     public function index()
     {
-        //
+        return view('bitacoras.index');
     }
 
     /**
@@ -66,33 +66,29 @@ class BitacoraController extends Controller
         //
     }
 
-    public function descargarBitacoraPdf($inicio, $final)
+    public function descargarRango(Request $request)
     {
-        //  $final = "2025-05-12";
-        //$inicio = "2025-04-12";
-        //dd($inicio);
-        $bitacora = DB::select('select *
-                                        from bitacoras
-                                         where bitacoras.fecha<=? and bitacoras.fecha>=?',
-            [$final, $inicio]
-        );
-
-        //dd($bitacora);
-
+        $inicio = $request->input('inicio');
+        $final = $request->input('final');
+        $bitacora = Bitacora::where('fecha', '>=', $inicio)
+            ->where('fecha', '<=', $final)
+            ->with('usuario')
+            ->get();
         $data = [
             "bitacora" => $bitacora,
         ];
         $pdf = Pdf::loadView('bitacoraPdf', $data);
-        return $pdf->download('Reporte-'.Carbon::now().'.pdf');
+        return $pdf->download('Reporte-' . Carbon::now() . '.pdf');
     }
-    public function descargarBitacoraPdfAll()
+    public function descargar()
     {
-        $bitacora = DB::select('select *
-                                        from bitacoras');
+        $bitacora = Bitacora::with('usuario')->get();
         $data = [
             "bitacora" => $bitacora,
         ];
         $pdf = Pdf::loadView('bitacoraPdf', $data);
-        return $pdf->download('Reporte-'.Carbon::now().'.pdf');
+        return $pdf->stream('Reporte-' . Carbon::now() . '.pdf');
+        // return $pdf->download('Reporte-' . Carbon::now() . '.pdf');
+        // return view('bitacoraPdf', $data);
     }
 }

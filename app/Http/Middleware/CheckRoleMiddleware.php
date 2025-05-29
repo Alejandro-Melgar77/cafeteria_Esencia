@@ -17,29 +17,15 @@ class CheckRoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        $user = Auth::user();
+        $usuario = Auth::user()?->usuario;
 
-        if (!$user) {
-            abort(403, 'Acceso denegado');
+        if (!$usuario) {
+            abort(403, 'No autorizado');
         }
 
-        $result = DB::select(
-            "SELECT rol.Cargo FROM rol
-             JOIN usuario ON usuario.RolID = rol.id
-             JOIN users ON users.id = usuario.id
-             WHERE users.id = ? LIMIT 1",
-            [$user->id]
-        );
-
-        if (empty($result)) {
-            abort(403, 'Acceso denegado');
-        }
-
-        $cargo = strtolower($result[0]->Cargo);
-        $roles = array_map('strtolower', $roles);
-
-        if (!in_array($cargo, $roles)) {
-            abort(403, 'Acceso denegado');
+        if (!in_array(strtolower($usuario->rol->Cargo), $roles)) {
+            // abort(403, 'No tienes el rol necesario');
+            return redirect()->back()->with('danger', 'No tienes el rol necesario para acceder a esa página');
         }
 
         return $next($request);

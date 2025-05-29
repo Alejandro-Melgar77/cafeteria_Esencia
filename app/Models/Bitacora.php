@@ -9,4 +9,9 @@ class Bitacora extends Model
     protected $table = "bitacoras";
     protected $fillable = ["fecha", "hora", "accion", "codigoUsuario"];
 
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'codigoUsuario');
+    }
+
 }

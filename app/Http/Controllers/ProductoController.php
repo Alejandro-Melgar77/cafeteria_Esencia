@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Inventario;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
@@ -13,8 +14,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $products = Producto::all();
-        return view("productos.index", compact("products"));
+        $productos = Producto::all();
+        return view("productos.index", compact("productos"));
     }
 
     /**
@@ -30,30 +31,50 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        // validar
-        $validated = $request->validate([
-            "nombre" => ["required","string"],
-            "fecha_vco" => ["required","date"],
-            "costo" => ["required"],
-            "stock"=> ["required","integer"],
+        $inventarioValidated = $request->validate([
+            "nombre" => ["required", "string", "max:100"],
+            "fecha_vco" => ["date"],
+            "costo" => ["required", "numeric", "min:0"],
+            "stock" => ["required", "integer", "min:0"],
         ]);
-        $inventario = Inventario::create($validated);
-        
-        $producto = Producto::create([
-            "id" => $inventario->id,
-            "Precio_venta" => $request->Precio_venta,
-            "Costo_produccion" => $request->Costo_produccion,
-            "Porcentaje_utilidad" => $request->Porcentaje_utilidad,
+        $productoValidated = $request->validate([
+            "Precio_venta" => ["required", "numeric", "min:0"],
+            "Costo_produccion" => ["required", "numeric", "min:0"],
+            "Porcentaje_utilidad" => ["required", "numeric", "min:0"],
         ]);
-        return redirect()->route("inventarios.index")->with("success", "Se he creado correctamente.");
+
+        try {
+            DB::transaction(function () use ($request) {
+                $inventario = Inventario::create([
+                    "nombre" => $request->nombre,
+                    "fecha_vco" => $request->fecha_vco,
+                    "costo" => $request->costo,
+                    "stock" => $request->stock,
+                ]);
+                $producto = Producto::create([
+                    "id" => $inventario->id,
+                    "Precio_venta" => $request->Precio_venta,
+                    "Costo_produccion" => $request->Costo_produccion,
+                    "Porcentaje_utilidad" => $request->Porcentaje_utilidad,
+                ]);
+            });
+
+            return redirect()->route('inventarios.index')->with('success', 'Producto creado correctamente');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
+        }
+
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $producto = Producto::with('inventario')->findOrFail($id);
+        return view('productos.show', compact('producto'));
     }
 
     /**
@@ -61,7 +82,8 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $producto = Producto::findOrFail($id);
+        return view('productos.edit', compact('producto'));
     }
 
     /**
@@ -69,7 +91,38 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|max:100',
+            'costo' => 'required|numeric|min:0',
+            'fecha_vto' => 'date',
+            'stock' => 'required|integer|min:0'
+        ]);
+        $request->validate([
+            'Precio_venta' => 'required|numeric|min:0',
+            'Costo_produccion' => 'required|numeric|min:0',
+            'Porcentaje_utilidad' => 'required|numeric|min:0',
+        ]);
+        try {
+            $producto = Producto::findOrFail($id);
+
+            DB::transaction(function () use ($request, $producto) {
+                $producto->inventarios->update([
+                    'nombre' => $request->nombre,
+                    'fecha_vco' => $request->fecha_vco,
+                    'costo' => $request->costo,
+                    'stock' => $request->stock
+                ]);
+
+                $producto->update([
+                    "Precio_venta" => $request->Precio_venta,
+                    "Costo_produccion" => $request->Costo_produccion,
+                    "Porcentaje_utilidad" => $request->Porcentaje_utilidad,
+                ]);
+            });
+            return redirect()->route('inventarios.index')->with('success', 'Producto actualizado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -77,6 +130,16 @@ class ProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            DB::transaction(function () use ($id) {
+                $producto = Producto::findOrFail($id);
+                $producto->inventarios->delete(); // Elimina en cascada
+            });
+
+            return redirect()->route('inventarios.index')->with('success', 'Producto eliminado correctamente');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
+        }
     }
 }

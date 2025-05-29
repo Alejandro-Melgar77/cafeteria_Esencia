@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cliente;
 use App\Models\Rol;
 use App\Models\Usuario;
 use Illuminate\Container\Attributes\DB as AttributesDB;
@@ -15,8 +16,10 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        //
-        $clientes = DB::select("select * from usuario, rol where usuario.RolID = rol.id and rol.Cargo = 'Cliente'");
+        $clientes = Usuario::clientes()
+            ->with('rol')
+            ->paginate(10);
+        // dd($clientes);
         return view("clientes.index", compact("clientes"));
     }
 
@@ -26,7 +29,6 @@ class ClienteController extends Controller
     public function create()
     {
         return view('clientes.create');
-
     }
 
     /**
@@ -34,12 +36,26 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-         $cliente = $request->all();
-         $rol = DB::table('rol')->where('Cargo', 'Cliente')->first();
-         $cliente['RolID'] = $rol->id;
+        $request->validate([
+            'Nombre' => 'required|max:100',
+            'Email' => 'required|email|unique:usuarios|max:255',
+            'Telefono' => 'required|max:15',
+        ]);
+        try {
+            DB::transaction(function () use ($request) {
+                $cliente = $request->all();
+                $rol = DB::table('roles')->where('Cargo', 'Cliente')->first();
+                $cliente['RolID'] = $rol->id;
+                Usuario::create($cliente);
+            });
+            return redirect()->route('clientes.index')
+                ->with('success', 'Cliente creado correctamente');
 
-         Usuario::create($cliente);
-         return redirect()->route('clientes.index');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('danger', 'Error al crear cliente: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     /**
@@ -55,7 +71,8 @@ class ClienteController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $cliente = Usuario::findOrFail($id);
+        return view('clientes.edit', compact('cliente'));
     }
 
     /**
@@ -63,7 +80,23 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'Nombre' => 'required|max:100',
+            'Email' => 'required|email|max:255|unique:usuarios,email,' . $id,
+            'Telefono' => 'required|max:15',
+        ]);
+        try {
+            DB::transaction(function () use ($request, $id) {
+                $cliente = Usuario::findOrFail($id);
+                $cliente->update($request->all());
+            });
+            return redirect()->route('clientes.index')
+                ->with('success', 'Cliente actualizado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('danger', 'Error al actualizar cliente: ' . $e->getMessage())
+                ->withInput();
+        }
     }
 
     /**
@@ -71,6 +104,14 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $cliente = Usuario::findOrFail($id);
+            $cliente->delete();
+            return redirect()->route('clientes.index')
+                ->with('success', 'Cliente eliminado correctamente');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('danger', 'Error al eliminar cliente: ' . $e->getMessage());
+        }
     }
 }

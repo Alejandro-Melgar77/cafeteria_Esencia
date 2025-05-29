@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('privilegio', function (Blueprint $table) {
+        Schema::create('privilegios', function (Blueprint $table) {
             $table->id();
             $table->string('Funcion');
             $table->timestamps();

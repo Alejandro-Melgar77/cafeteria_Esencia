@@ -1,53 +1,106 @@
-@extends('layouts.app')
+@extends('layouts.general')
 
 @section('content')
-    <div class="col-12 py-4">
-        <div class="card">
-            <div class="card-body col-lg-6">
-                <h4 class="card-title">Crear nuevo producto</h4>
-                <form action="{{ route('productos.store') }}" method="POST">
-                    @csrf
-                    <div class=" mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="fecha_vco" class="form-label">Fecha</label>
-                        <input type="text" class="form-control" id="fecha_vco" name="fecha_vco" required>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="costo" class="form-label">Costo</label>
-                        <input type="text" class="form-control" id="costo" name="costo" required>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="stock" class="form-label">Stock</label>
-                        <input type="text" class="form-control" id="stock" name="stock" required>
-                    </div>
-                    {{-- producto --}}
-                    <div class=" mb-3">
-                        <label for="Precio_venta" class="form-label">Precio Venta</label>
-                        <input type="text" class="form-control" id="Precio_venta" name="Precio_venta" required>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="Costo_produccion" class="form-label">Costo Produccion</label>
-                        <input type="text" class="form-control" id="Costo_produccion" name="Costo_produccion" required>
-                    </div>
-                    <div class=" mb-3">
-                        <label for="Porcentaje_utilidad" class="form-label">Porcentaje Utilidad</label>
-                        <input type="text" class="form-control" id="Porcentaje_utilidad" name="Porcentaje_utilidad" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary float-end">Crear producto</button>
-                </form>
-                
-                @if($errors->any())
-                    <div class="error">
-                        @foreach ($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
-                    </div>
-                @endif
-            </div>
+    <div class="flex flex-col bg-white dark:bg-brown-700 rounded-xl shadow p-8">
+
+        <div class="title text-xl font-semibold flex items-center">
+            <h1>Nuevo Producto</h1>
         </div>
-    </div>
+
+
+        <div class="content flex flex-col">
+            <div class="py-4">
+                <span class="text-pretty text-xs font-light">
+                    Aqui podras crear un nuevo producto, ingresa la información
+                    requerida en el formulario para registrar un producto en el sistema.
+                </span>
+            </div>
+
+            <!-- div para errores -->
+            @include('partials.errors')
+
+            <form action="{{ route('productos.store') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label for="nombre"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" value="{{ old('nombre') }}" required
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('nombre') outline-red-500 @enderror">
+                    @error('nombre')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="fecha_vco" class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Fecha
+                        de vencimiento</label>
+                    <input type="date" name="fecha_vco" id="fecha_vco" value="{{ old('fecha_vco') }}"
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('fecha_vco') outline-red-500 @enderror">
+                    @error('fecha_vco')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="costo"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Costo</label>
+                    <input type="text" name="costo" id="costo" value="{{ old('costo') }}" required
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('costo') outline-red-500 @enderror">
+                    @error('costo')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="stock"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Stock</label>
+                    <input type="text" name="stock" id="stock" value="{{ old('stock') }}" required
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('stock') outline-red-500 @enderror">
+                    @error('stock')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="Precio_venta"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Precio de venta</label>
+                    <input type="text" name="Precio_venta" id="Precio_venta" value="{{ old('Precio_venta') }}" required
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('Precio_venta') outline-red-500 @enderror">
+                    @error('Precio_venta')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="Costo_produccion"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Costo de
+                        produccion</label>
+                    <input type="text" name="Costo_produccion" id="Costo_produccion"
+                        value="{{ old('Costo_produccion') }}" required
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('Costo_produccion') outline-red-500 @enderror">
+                    @error('Costo_produccion')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="mb-4">
+                    <label for="Porcentaje_utilidad"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Porcentaje de
+                        utilidad</label>
+                    <input type="text" name="Porcentaje_utilidad" id="Porcentaje_utilidad"
+                        value="{{ old('Porcentaje_utilidad') }}" required
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline outline-brown-500 @error('Porcentaje_utilidad') outline-red-500 @enderror">
+                    @error('Porcentaje_utilidad')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="flex justify-end gap-2 pt-4">
+                    <a href="{{ route('inventarios.index') }}"
+                        class="px-4 py-2 text-gray-700 dark:text-white border rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                        class="px-4 py-2 bg-brown-600 text-white rounded-lg hover:bg-brown-700 cursor-pointer">
+                        Registrar
+                    </button>
+                </div>
+            </form>
+        </div>
+
     </div>
 @endsection

@@ -1,11 +1,27 @@
-@import 'tailwindcss';
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
 @source '../**/*.js';
+@source "../views";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: "Poppins", "Instrument Sans", ui-sans-serif, system-ui,
+        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        "Noto Color Emoji";
+    /* --font-poppins: "Poppins", serif; */
+
+    --color-coffee: oklch(0.9429 0.0326 81.95);
+    --color-brown: oklch(0.2634 0.048 63.08);
+
+    --color-brown-100: oklch(0.98 0.01 63.08);
+    --color-brown-200: oklch(0.85 0.02 63.08);
+    --color-brown-300: oklch(0.72 0.03 63.08);
+    --color-brown-400: oklch(0.58 0.04 63.08);
+    --color-brown-500: oklch(0.45 0.045 63.08);
+    --color-brown-600: oklch(0.35 0.048 63.08);
+    --color-brown-700: oklch(0.2634 0.048 63.08); /* base */
+    --color-brown-800: oklch(0.18 0.045 63.08);
+    --color-brown-900: oklch(0.1 0.035 63.08);
 }
