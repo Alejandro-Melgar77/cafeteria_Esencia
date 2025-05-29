@@ -9,6 +9,8 @@
             'Gestionar clientes' => 'clientes.index',
             'Gestionar personal' => 'personal.index',
             'Gestionar inventario' => 'inventarios.index',
+            'Gestionar productos' => 'productos.index',
+            'Gestionar ingredientes' => 'ingredientes.index',
             'Gestionar bitacoras' => 'bitacoras.index',
             'Gestionar proveedores' => 'proveedores.index',
         ],
@@ -18,6 +20,8 @@
             'Gestionar clientes' => 'clientes.index',
             'Gestionar personal' => 'personal.index',
             'Gestionar inventario' => 'inventarios.index',
+            'Gestionar productos' => 'productos.index',
+            'Gestionar ingredientes' => 'ingredientes.index',
             'Gestionar proveedores' => 'proveedores.index',
         ],
         'cliente' => [

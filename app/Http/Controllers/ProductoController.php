@@ -14,7 +14,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();
+        $productos = Producto::paginate(10);
         return view("productos.index", compact("productos"));
     }
 
@@ -59,7 +59,7 @@ class ProductoController extends Controller
                 ]);
             });
 
-            return redirect()->route('inventarios.index')->with('success', 'Producto creado correctamente');
+            return redirect()->route('productos.index')->with('success', 'Producto creado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
@@ -73,7 +73,7 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto = Producto::with('inventario')->findOrFail($id);
+        $producto = Producto::findOrFail($id);
         return view('productos.show', compact('producto'));
     }
 
@@ -119,7 +119,7 @@ class ProductoController extends Controller
                     "Porcentaje_utilidad" => $request->Porcentaje_utilidad,
                 ]);
             });
-            return redirect()->route('inventarios.index')->with('success', 'Producto actualizado correctamente');
+            return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
         }
@@ -136,7 +136,7 @@ class ProductoController extends Controller
                 $producto->inventarios->delete(); // Elimina en cascada
             });
 
-            return redirect()->route('inventarios.index')->with('success', 'Producto eliminado correctamente');
+            return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
