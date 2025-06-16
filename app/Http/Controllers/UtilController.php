@@ -36,16 +36,16 @@ class UtilController extends Controller
     {
         $modelStrings = [
             'Bitacora' => 'bitacoras',
+            'Cliente' => 'clientes',
+            'Ingrediente' => 'ingredientes',
+            'Inventario' => 'inventarios',
+            'Personal' => 'personales',
+            'Privilegio' => 'privilegios',
+            'Producto' => 'productos',
+            'Proveedor' => 'proveedores',
             'Rol' => 'roles',
             'User' => 'users',
             'Usuario' => 'usuarios',
-            'Privilegio' => 'privilegios',
-            'Cliente' => 'clientes',
-            'Personal' => 'personales',
-            'Inventario' => 'inventarios',
-            'Producto' => 'productos',
-            'Ingrediente' => 'ingredientes',
-            'Proveedor' => 'proveedores',
             'Receta' => 'recetas',
         ];
 

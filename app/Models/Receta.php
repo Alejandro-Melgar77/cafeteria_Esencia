@@ -22,9 +22,7 @@ class Receta extends Model
     public function ingredientes()
     {
         return $this->belongsToMany(Ingrediente::class, 'ingredientes_recetas')
-            ->withPivot(['cantidad', 'created_at', 'updated_at'])
-            ->withTimestamps();
+                    ->withPivot(['cantidad', 'created_at', 'updated_at'])
+                    ->withTimestamps();
     }
-
-
 }

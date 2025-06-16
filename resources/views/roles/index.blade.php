@@ -44,7 +44,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($roles as $rol)
+                        @foreach ($roles as $rol)
                             <tr class="hover:bg-slate-100 dark:hover:bg-stone-700 transition-colors duration-200">
                                 <td class="p-3 border-b border-gray-200">
                                     <p class="block text-sm text-brown-800 dark:text-gray-200">
@@ -82,22 +82,14 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="p-3 text-center text-gray-500">
-                                    No hay roles registrados.
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
-            @if ($roles->hasPages())
-                <div class="mt-4">
-                    {{ $roles->links('vendor.pagination.tailwind') }}
-                </div>
-            @endif
+            <div class="mt-4">
+                {{ $roles->links('vendor.pagination.tailwind') }}
+            </div>
         </div>
     </div>
 

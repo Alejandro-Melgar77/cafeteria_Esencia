@@ -51,10 +51,6 @@ class RolPrivilegioSeeder extends Seeder
             'crear proveedores',
             'editar proveedores',
             'eliminar proveedores',
-            'ver recetas',
-            'crear recetas',
-            'editar recetas',
-            'eliminar recetas',
         ];
 
         foreach ($funcionesPersonal as $funcion) {

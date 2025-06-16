@@ -61,8 +61,8 @@ class RecetaController extends Controller
     public function show($id)
     {
         $receta = Receta::with(['producto.inventarios', 'ingredientes.inventarios'])
-            ->findOrFail($id);
-
+                        ->findOrFail($id);
+        
         return view('recetas.show', compact('receta'));
     }
 
@@ -71,7 +71,7 @@ class RecetaController extends Controller
         $receta = Receta::with(['ingredientes'])->findOrFail($id);
         $productos = Producto::all();
         $ingredientes = Ingrediente::all();
-
+        
         return view('recetas.edit', compact('receta', 'productos', 'ingredientes'));
     }
 
@@ -88,7 +88,7 @@ class RecetaController extends Controller
         try {
             DB::transaction(function () use ($validated, $id) {
                 $receta = Receta::findOrFail($id);
-
+                
                 $receta->update([
                     'nro' => $validated['nro'],
                     'producto_id' => $validated['producto_id']
@@ -125,10 +125,8 @@ class RecetaController extends Controller
                 ->with('success', 'Receta eliminada correctamente');
 
         } catch (\Exception $e) {
-            return redirect()->back()->with('danger', 'Error al eliminar receta: ' . $e->getMessage());
+            return redirect()->back()
+                ->with('danger', 'Error al eliminar receta: ' . $e->getMessage());
         }
-
     }
-
-
 }

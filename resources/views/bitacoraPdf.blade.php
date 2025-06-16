@@ -67,6 +67,7 @@
             <th>FECHA</th>
             <th>HORA</th>
             <th>ACCION</th>
+            <th>IP</th>
             <th>USUARIO ID</th>
             <th>NOMBRE</th>
             <th>CARGO</th>
@@ -74,12 +75,13 @@
 
         @foreach ($bitacora as $b)
             <tr>
-                <td style="font-size: 10px">{{ $b->fecha }}</td>
-                <td style="font-size: 10px">{{ $b->hora }}</td>
-                <td style="font-size: 10px">{{ $b->accion }}</td>
-                <td style="font-size: 10px">{{ $b->usuario->id }}</td>
-                <td style="font-size: 10px">{{ $b->usuario->Nombre }}</td>
-                <td style="font-size: 10px">{{ $b->usuario->rol->Cargo }}</td>
+                <td>{{ $b->fecha }}</td>
+                <td>{{ $b->hora }}</td>
+                <td>{{ $b->accion }}</td>
+                <td>{{ $b->ip }}</td>
+                <td>{{ $b->usuario->id }}</td>
+                <td>{{ $b->usuario->Nombre }}</td>
+                <td>{{ $b->usuario->rol->Cargo }}</td>
             </tr>
         @endforeach
     </table>

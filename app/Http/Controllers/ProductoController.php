@@ -14,7 +14,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::paginate(10);
+        $productos = Producto::all();
         return view("productos.index", compact("productos"));
     }
 
@@ -33,6 +33,7 @@ class ProductoController extends Controller
     {
         $inventarioValidated = $request->validate([
             "nombre" => ["required", "string", "max:100"],
+            "fecha_vco" => ["date"],
             "costo" => ["required", "numeric", "min:0"],
             "stock" => ["required", "integer", "min:0"],
         ]);
@@ -58,7 +59,7 @@ class ProductoController extends Controller
                 ]);
             });
 
-            return redirect()->route('productos.index')->with('success', 'Producto creado correctamente');
+            return redirect()->route('inventarios.index')->with('success', 'Producto creado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
@@ -72,7 +73,7 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        $producto = Producto::findOrFail($id);
+        $producto = Producto::with('inventarios')->findOrFail($id);
         return view('productos.show', compact('producto'));
     }
 
@@ -93,6 +94,7 @@ class ProductoController extends Controller
         $request->validate([
             'nombre' => 'required|max:100',
             'costo' => 'required|numeric|min:0',
+            'fecha_vto' => 'date',
             'stock' => 'required|integer|min:0'
         ]);
         $request->validate([
@@ -117,7 +119,7 @@ class ProductoController extends Controller
                     "Porcentaje_utilidad" => $request->Porcentaje_utilidad,
                 ]);
             });
-            return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente');
+            return redirect()->route('inventarios.index')->with('success', 'Producto actualizado correctamente');
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
         }
@@ -134,7 +136,7 @@ class ProductoController extends Controller
                 $producto->inventarios->delete(); // Elimina en cascada
             });
 
-            return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente');
+            return redirect()->route('inventarios.index')->with('success', 'Producto eliminado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());

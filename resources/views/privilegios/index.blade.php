@@ -55,7 +55,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($privilegios as $privilegio)
+                        @foreach ($privilegios as $privilegio)
                             <tr class="hover:bg-slate-50">
                                 <td class="p-3 border-b border-gray-200">
                                     <p class="block text-sm text-slate-800">
@@ -90,22 +90,14 @@
                                     </div>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="p-3 text-center text-gray-500">
-                                    No hay privilegios registrados.
-                                </td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
-            @if ($privilegios->hasPages())
-                <div class="mt-4">
-                    {{ $privilegios->links('vendor.pagination.tailwind') }}
-                </div>
-            @endif
+            <div class="mt-4">
+                {{ $privilegios->links('vendor.pagination.tailwind') }}
+            </div>
         </div>
     </div>
 @endsection

@@ -21,7 +21,7 @@
 
         <!-- ID del producto -->
         <h4 class="text-2xl font-semibold">Producto # {{ $producto->inventarios->id }}</h4>
-
+        
         <!-- Sección de Información Básica -->
         <div class="flex flex-col border border-gray-200 rounded-lg p-4 mt-2">
             <h2 class="font-semibold text-lg mb-2">Información básica</h2>
@@ -29,7 +29,7 @@
             <p><span class="font-medium">Nombre: </span>{{ $producto->inventarios->nombre }}</p>
             <p>
                 <span class="font-medium">Fecha Vencimiento: </span>
-                @if ($producto->inventarios->fecha_vco)
+                @if($producto->inventarios->fecha_vco)
                     {{ \Carbon\Carbon::parse($producto->inventarios->fecha_vco)->format('d/m/Y') }}
                 @else
                     N/A
@@ -41,8 +41,7 @@
         <div class="flex flex-col border border-gray-200 rounded-lg p-4 mt-2">
             <h2 class="font-semibold text-lg mb-2">Datos económicos</h2>
             <p><span class="font-medium">Costo unitario: </span>${{ number_format($producto->inventarios->costo, 2) }}</p>
-            <p><span class="font-medium">Costo de producción: </span>${{ number_format($producto->Costo_produccion, 2) }}
-            </p>
+            <p><span class="font-medium">Costo de producción: </span>${{ number_format($producto->Costo_produccion, 2) }}</p>
             <p><span class="font-medium">Precio de venta: </span>${{ number_format($producto->Precio_venta, 2) }}</p>
             <p><span class="font-medium">Porcentaje de utilidad: </span>{{ $producto->Porcentaje_utilidad }} %</p>
             <p><span class="font-medium">Stock disponible: </span>{{ $producto->inventarios->stock }} unidades</p>

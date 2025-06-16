@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bitacora extends Model
 {
     protected $table = "bitacoras";
-    protected $fillable = ["fecha", "hora", "accion", "codigoUsuario"];
+    protected $fillable = ["fecha", "hora", "accion", "ip", "codigoUsuario"];
 
     public function usuario()
     {

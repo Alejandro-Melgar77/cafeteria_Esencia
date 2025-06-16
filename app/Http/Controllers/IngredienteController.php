@@ -12,7 +12,7 @@ class IngredienteController extends Controller
 
     public function index()
     {
-        $ingredientes = Ingrediente::paginate(10);
+        $ingredientes = Ingrediente::with('inventario')->get();
         return view('ingredientes.index', compact('ingredientes'));
     }
 
@@ -49,7 +49,7 @@ class IngredienteController extends Controller
                 ]);
             });
 
-            return redirect()->route('ingredientes.index')->with('success', 'Ingrediente creado correctamente');
+            return redirect()->route('inventarios.index')->with('success', 'Ingrediente creado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
@@ -93,7 +93,7 @@ class IngredienteController extends Controller
                 ]);
             });
 
-            return redirect()->route('ingredientes.index')->with('success', 'Ingrediente actualizado correctamente');
+            return redirect()->route('inventarios.index')->with('success', 'Ingrediente actualizado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
@@ -107,7 +107,7 @@ class IngredienteController extends Controller
             return view('ingredientes.show', compact('ingrediente'));
 
         } catch (\Exception $e) {
-            return redirect()->route('ingredientes.index')->with('danger', 'Ingrediente no encontrado: ' . $e->getMessage());
+            return redirect()->route('inventarios.index')->with('danger', 'Ingrediente no encontrado: ' . $e->getMessage());
         }
     }
 
@@ -119,7 +119,7 @@ class IngredienteController extends Controller
                 $ingrediente->inventarios->delete(); // Elimina el inventario relacionado
             });
 
-            return redirect()->route('ingredientes.index')->with('success', 'Ingrediente eliminado correctamente');
+            return redirect()->route('inventarios.index')->with('success', 'Ingrediente eliminado correctamente');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error al eliminar: ' . $e->getMessage());

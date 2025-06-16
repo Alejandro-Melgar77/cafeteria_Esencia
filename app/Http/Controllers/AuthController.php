@@ -83,6 +83,7 @@ class AuthController extends Controller
             'fecha' => now(),
             'hora' => Carbon::now(),
             'accion' => $accion,
+            'ip' => request()->ip(),
             'codigoUsuario' => $usuario->id,
         ]);
     }

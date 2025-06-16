@@ -21,7 +21,7 @@
 
         <!-- ID del ingrediente -->
         <h4 class="text-2xl font-semibold">Ingrediente # {{ $ingrediente->inventarios->id }}</h4>
-
+        
         <!-- Sección de Información Básica -->
         <div class="flex flex-col border border-gray-200 rounded-lg p-4 mt-2">
             <h2 class="font-semibold text-lg mb-2">Información básica</h2>
@@ -29,7 +29,7 @@
             <p><span class="font-medium">Nombre: </span>{{ $ingrediente->inventarios->nombre }}</p>
             <p>
                 <span class="font-medium">Fecha Vencimiento: </span>
-                @if ($ingrediente->inventarios->fecha_vco)
+                @if($ingrediente->inventarios->fecha_vco)
                     {{ \Carbon\Carbon::parse($ingrediente->inventarios->fecha_vco)->format('d/m/Y') }}
                 @else
                     N/A
@@ -43,8 +43,7 @@
         <!-- Sección de Datos Económicos -->
         <div class="flex flex-col border border-gray-200 rounded-lg p-4 mt-2">
             <h2 class="font-semibold text-lg mb-2">Datos económicos</h2>
-            <p><span class="font-medium">Costo unitario: </span>${{ number_format($ingrediente->inventarios->costo, 2) }}
-            </p>
+            <p><span class="font-medium">Costo unitario: </span>${{ number_format($ingrediente->inventarios->costo, 2) }}</p>
             <p><span class="font-medium">Stock disponible: </span>{{ $ingrediente->inventarios->stock }} unidades</p>
         </div>
 

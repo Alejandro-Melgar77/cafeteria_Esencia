@@ -108,7 +108,7 @@
                         @empty
                             <tr>
                                 <td colspan="6" class="p-4 text-center text-gray-500">
-                                    No hay clientes disponibles.
+                                    No hay proveedores disponibles.
                                 </td>
                             </tr>
                         @endforelse
@@ -116,11 +116,9 @@
                 </table>
             </div>
 
-            @if ($clientes->hasPages())
-                <div class="mt-4">
-                    {{ $clientes->links('vendor.pagination.tailwind') }}
-                </div>
-            @endif
+            <div class="mt-4">
+                {{ $clientes->links('vendor.pagination.tailwind') }}
+            </div>
         </div>
     </div>
 @endsection

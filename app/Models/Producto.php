@@ -13,6 +13,6 @@ class Producto extends Model
     protected $fillable = ['id', 'Precio_venta','Costo_produccion','Porcentaje_utilidad'];
 
     public function inventarios(): BelongsTo {
-        return $this->belongsTo(Inventario::class,'id');
+        return $this->belongsTo(Inventario::class,'id', 'id');
     }
 }
