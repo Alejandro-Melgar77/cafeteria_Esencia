@@ -47,6 +47,8 @@ class UtilController extends Controller
             'User' => 'users',
             'Usuario' => 'usuarios',
             'Receta' => 'recetas',
+            'Nota De Compra' => 'nota_compra',
+            'Nota De salida' => 'nota_salida',
         ];
 
         return collect($modelStrings)->mapWithKeys(function ($value, $key) {

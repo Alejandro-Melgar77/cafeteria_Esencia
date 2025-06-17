@@ -5,6 +5,8 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\IngredienteController;
 use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\MetodoPagoController;
+use App\Http\Controllers\NotaDeCompraController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PrivilegioController;
 use App\Http\Controllers\ProductoController;
@@ -59,6 +61,16 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
     Route::post('bitacora', [BitacoraController::class, 'descargarRango'])->name('bitacoras.descargar.rango');
     Route::get('bitacora', [BitacoraController::class, 'descargar'])->name('bitacoras.descargar');
     Route::get('bitacoras', [BitacoraController::class, 'index'])->middleware('permiso:ver bitacoras')->name('bitacoras.index');
+
+
+    //metodo de pago
+    Route::get('metodos_pago', [MetodoPagoController::class, 'index'])->name('metodos_pago.index')->middleware(['auth', 'permiso:ver metodos']);
+    Route::get('metodos_pago/{metodo_pago}', [MetodoPagoController::class, 'show'])->name('metodos_pago.show')->middleware(['auth', 'permiso:ver metodos']);
+    Route::get('metodos_pago/create', [MetodoPagoController::class, 'create'])->name('metodos_pago.create')->middleware(['auth', 'permiso:crear metodos']);
+    Route::post('metodos_pago', [MetodoPagoController::class, 'store'])->name('metodos_pago.store')->middleware(['auth', 'permiso:crear metodos']);
+    Route::get('metodos_pago/{metodo_pago}/edit', [MetodoPagoController::class, 'edit'])->name('metodos_pago.edit')->middleware(['auth', 'permiso:editar metodos']);
+    Route::put('metodos_pago/{metodo_pago}', [MetodoPagoController::class, 'update'])->name('metodos_pago.update')->middleware(['auth', 'permiso:editar metodos']);
+    Route::delete('metodos_pago/{metodo_pago}', [MetodoPagoController::class, 'destroy'])->name('metodos_pago.destroy')->middleware(['auth', 'permiso:eliminar metodos']);
 });
 
 
@@ -128,6 +140,31 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::put('recetas/{id}', [RecetaController::class, 'update'])->middleware('permiso:editar recetas')->name('recetas.update');
     Route::delete('recetas/{id}', [RecetaController::class, 'destroy'])->middleware('permiso:eliminar recetas')->name('recetas.destroy');
 
+
+    //nota_compra
+
+    Route::get('nota_compra/crear', [NotaDeCompraController::class, 'create'])->name('nota_compra.create');
+    Route::post('nota_compra/guardar', [NotaDeCompraController::class, 'store'])->name('nota_compra.store');
+    Route::get('nota_compra/pdf/{codigo}', [NotaDeCompraController::class, 'showPDF'])->name('nota_compra.show_pdf');
+    Route::get('nota_compra/reporte', [NotaDeCompraController::class, 'reporte'])->name('nota_compra.reporte');
+
+
+    // Nota de Salida
+    Route::get('nota_salida/crear', [App\Http\Controllers\NotaDeSalidaController::class, 'create'])
+        ->middleware('permiso:crear nota_salida')
+        ->name('nota_salida.create');
+
+    Route::post('nota_salida/guardar', [App\Http\Controllers\NotaDeSalidaController::class, 'store'])
+        ->middleware('permiso:crear nota_salida')
+        ->name('nota_salida.store');
+
+    Route::get('nota_salida/pdf/{codigo}', [App\Http\Controllers\NotaDeSalidaController::class, 'showPDF'])
+        ->middleware('permiso:ver nota_salida')
+        ->name('nota_salida.show_pdf');
+
+    Route::get('nota_salida/reporte', [App\Http\Controllers\NotaDeSalidaController::class, 'reporte'])
+        ->middleware('permiso:ver nota_salida')
+        ->name('nota_salida.reporte');
 });
 
 // Rutas para ADMINISTRADOR, PERSONAL y CLIENTES
@@ -156,4 +193,3 @@ Route::middleware(['guest'])->group(function () {
 
 // Logout (protegido por sesión activa)
 Route::post('logout', [AuthController::class, "logout"])->middleware('auth')->name("logout");
-

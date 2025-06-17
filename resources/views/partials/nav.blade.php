@@ -12,6 +12,8 @@
             'Gestionar bitacoras' => 'bitacoras.index',
             'Gestionar proveedores' => 'proveedores.index',
             'Gestionar recetas' => 'recetas.index',
+            'Nota de Compra' => 'nota_compra.create',
+            'Nota de Salida' => 'nota_salida.create',
         ],
         'personal' => [
             'Inicio' => 'dashboard',
@@ -20,6 +22,8 @@
             'Gestionar personal' => 'personal.index',
             'Gestionar inventario' => 'inventarios.index',
             'Gestionar proveedores' => 'proveedores.index',
+            'Nota de Compra' => 'nota_compra.create',
+            'Nota de Salida' => 'nota_salida.create',
         ],
         'cliente' => [
             'Inicio' => 'dashboard',

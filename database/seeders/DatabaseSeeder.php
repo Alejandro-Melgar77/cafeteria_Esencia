@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MetodoPago;
 use App\Models\Rol;
 use App\Models\User;
 use App\Models\Usuario;
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             RolSeeder::class,
             PrivilegioSeeder::class,
             RolPrivilegioSeeder::class,
+            MetodoDePagoSeeder::class,
         ]);
 
         $user = User::create([
