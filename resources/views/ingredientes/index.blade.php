@@ -1,98 +1,142 @@
-@extends('layouts.app')
-
+@extends('layouts.general')
 @section('content')
-    <div class="col-12">
-        <div class="py-2">
-            <div class="row">
-                <div class="col-5 align-self-center">
-                    <h3 class="page-title">Ingredientes</h3>
-                </div>
-                <div class="col-7 align-self-center">
-                    <div class="d-flex align-items-center justify-content-end">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="{{ route('welcome') }}">Principal</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">Ingredientes</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <div class="d-flex align-items-center justify-content-between">
-                    <h4 class="card-title mb-0">Ingredientes registrados</h4>
-                    <a class="btn btn-success d-flex align-items-center gap-1" href="{{ route('ingredientes.create') }}">
-                        <i class="mdi mdi-plus mdi-18px"></i>
-                        <span>Crear nuevo Ingrediente</span>
+    <div class="flex flex-col bg-white rounded-xl shadow p-8">
+        <div class="flex flex-col">
+            <div class="title flex justify-between items-center">
+                <h4 class="font-semibold text-xl">Ingredientes registrados</h4>
+                <div class="flex justify-center items-center space-x-2">
+                    <a class="flex items-center bg-green-500 p-2 rounded-lg hover:bg-green-600 text-white"
+                        href="{{ route('ingredientes.create') }}">
+                        <x-heroicon-o-plus class="size-6" />
                     </a>
                 </div>
             </div>
-            <div class="px-4 py-2">
-                <span class="text-muted fw-normal" style="font-size: 14px">
+            <div class="py-4">
+                <span class="text-pretty text-sm font-light">
                     Aquí podrás ver todos los ingredientes registrados en el sistema. Puedes crear nuevos ingredientes,
                     editar los existentes o eliminar aquellos que ya no necesites.
                 </span>
             </div>
-            <div class="table-responsive pt-4">
-                <table class="table table-hover table-striped text-center">
+
+            <div
+                class="relative flex flex-col w-full h-full overflow-y-auto text-gray-700 bg-white border border-gray-200 rounded-lg bg-clip-border">
+                <table class="w-full text-left table-auto min-w-max">
                     <thead>
                         <tr>
-                            <th>CÓDIGO</th>
-                            <th>NOMBRE</th>
-                            <th>FECHA VTO.</th>
-                            <th>COSTO</th>
-                            <th>UNIDAD MED.</th>
-                            <th>STOCK</th>
-                            <th>ACCIONES</th>
+                            <th class="p-4 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500">
+                                    ID
+                                </p>
+                            </th>
+                            <th class="p-4 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500">
+                                    NOMBRE
+                                </p>
+                            </th>
+                            <th class="p-4 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500">
+                                    FECHA (VCO)
+                                </p>
+                            </th>
+                            <th class="p-4 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500">
+                                    COSTO
+                                </p>
+                            </th>
+                            <th class="p-4 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500">
+                                    MEDIDA
+                                </p>
+                            </th>
+                            <th class="p-4 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500">
+                                    STOCK
+                                </p>
+                            </th>
+                            <th class="p-3 border-b border-gray-400 bg-gray-100">
+                                <p class="block text-sm font-semibold leading-none text-gray-500"></p>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($ingredientes as $ingrediente)
-                            <tr>
-                                <td class="text-center align-middle">{{ $ingrediente->inventario->codigo }}</td>
-                                <td class="text-center align-middle">{{ $ingrediente->inventario->nombre }}</td>
-                                <td class="text-center align-middle">
-                                    @if($ingrediente->inventario->fecha_vto)
-                                        {{ \Carbon\Carbon::parse($ingrediente->inventario->fecha_vto)->format('d/m/Y') }}
-                                    @else
-                                        N/A
-                                    @endif
+                        @forelse ($ingredientes as $ingrediente)
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-3 border-b border-gray-200">
+                                    <p class="block text-sm text-slate-800">
+                                        {{ $ingrediente->id }}
+                                    </p>
                                 </td>
-                                <td class="text-center align-middle">
-                                    ${{ number_format($ingrediente->inventario->costo, 2) }}
+                                <td class="p-3 border-b border-gray-200">
+                                    <p class="block text-sm text-slate-800">
+                                        {{ $ingrediente->inventarios->nombre }}
+                                    </p>
                                 </td>
-                                <td class="text-center align-middle">{{ $ingrediente->inventario->unidad_medida }}</td>
-                                <td class="text-center align-middle">{{ $ingrediente->inventario->stock }}</td>
-                                <td class="text-center align-middle">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a class="btn btn-info btn-sm" 
-                                           href="{{ route('ingredientes.show', [$ingrediente->id]) }}">
-                                            <i class="mdi mdi-eye"></i> Ver
+                                <td class="p-3 border-b border-gray-200">
+                                    <p class="block text-sm text-slate-800">
+                                        @if ($ingrediente->inventarios->fecha_vco)
+                                            {{ \Carbon\Carbon::parse($ingrediente->inventarios->fecha_vco)->format('d/m/Y') }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </p>
+                                </td>
+                                <td class="p-3 border-b border-gray-200">
+                                    <p class="block text-sm text-slate-800">
+                                        ${{ number_format($ingrediente->inventarios->costo, 2) }}
+                                    </p>
+                                </td>
+                                <td class="p-3 border-b border-gray-200">
+                                    <p class="block text-sm text-slate-800">
+                                        ${{ $ingrediente->Unidad_medidad }}
+                                    </p>
+                                </td>
+                                <td class="p-3 border-b border-gray-200">
+                                    <p class="block text-sm text-slate-800">
+                                        {{ $ingrediente->inventarios->stock }}
+                                    </p>
+                                </td>
+                                <td class="p-1 border-b border-gray-200 w-48">
+                                    <div class="flex space-x-2 justify-center">
+                                        <a href="{{ route('ingredientes.show', [$ingrediente->id]) }}"
+                                            class="flex space-x-1 text-xs font-medium text-cyan-700 outline hover:text-cyan-900 p-2 rounded-lg">
+                                            <x-heroicon-s-eye class="h-4 w-4" />
+
+
                                         </a>
-                                        <a class="btn btn-warning btn-sm" 
-                                           href="{{ route('ingredientes.edit', [$ingrediente->id]) }}">
-                                            <i class="mdi mdi-pencil"></i> Editar
+                                        <a href="{{ route('ingredientes.edit', [$ingrediente->id]) }}"
+                                            class="flex space-x-1 text-xs font-medium text-yellow-700 outline hover:text-yellow-900 p-2 rounded-lg">
+                                            <x-heroicon-s-pencil class="h-4 w-4" />
                                         </a>
-                                        <form method="POST" 
-                                              action="{{ route('ingredientes.destroy', [$ingrediente->id]) }}">
-                                            @csrf @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" type="submit"
-                                                onclick="return confirm('¿Estás seguro?')">
-                                                <i class="mdi mdi-delete"></i> Eliminar
+                                        <form action="{{ route('ingredientes.destroy', [$ingrediente->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button
+                                                class="flex space-x-1 text-xs font-medium text-red-700 outline hover:text-red-900 p-2 rounded-lg cursor-pointer"
+                                                type="submit"
+                                                onclick="return confirm('Estas seguro de eliminar el ID: {{ $ingrediente->id }}?')">
+                                                <x-heroicon-s-trash class="h-4 w-4" />
                                             </button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="6" class="p-4 text-center text-gray-500">
+                                    No hay ingredientes disponibles.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
+
+            @if ($ingredientes->hasPages())
+                <div class="mt-4">
+                    {{ $ingredientes->links('vendor.pagination.tailwind') }}
+                </div>
+            @endif
         </div>
     </div>
 @endsection

@@ -12,7 +12,7 @@ class IngredienteController extends Controller
 
     public function index()
     {
-        $ingredientes = Ingrediente::with('inventario')->get();
+        $ingredientes = Ingrediente::paginate(10);
         return view('ingredientes.index', compact('ingredientes'));
     }
 
