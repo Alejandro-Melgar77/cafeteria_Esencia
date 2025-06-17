@@ -59,6 +59,24 @@ class PrivilegioSeeder extends Seeder
             ['Funcion' => 'editar proveedores'],
             ['Funcion' => 'eliminar proveedores'],
 
+            ['Funcion' => 'ver recetas'],
+            ['Funcion' => 'crear recetas'],
+            ['Funcion' => 'editar recetas'],
+            ['Funcion' => 'eliminar recetas'],
+
+            ['Funcion' => 'ver nota_compra'],
+            ['Funcion' => 'crear nota_compra'],
+            ['Funcion' => 'editar nota_compra'],
+            ['Funcion' => 'eliminar nota_compra'],
+
+            ['Funcion' => 'ver nota_salida'],
+            ['Funcion' => 'crear nota_salida'],
+            ['Funcion' => 'editar nota_salida'],
+            ['Funcion' => 'eliminar nota_salida'],
+
+
+            ['Funcion' => 'ver bitacoras'],
+
         ]);
     }
 }

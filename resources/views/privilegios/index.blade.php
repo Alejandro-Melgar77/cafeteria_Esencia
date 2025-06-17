@@ -55,7 +55,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($privilegios as $privilegio)
+                        @forelse ($privilegios as $privilegio)
                             <tr class="hover:bg-slate-50">
                                 <td class="p-3 border-b border-gray-200">
                                     <p class="block text-sm text-slate-800">
@@ -90,7 +90,13 @@
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr>
+                                <td colspan="3" class="p-3 text-center text-gray-500">
+                                    No hay privilegios registrados.
+                                </td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
