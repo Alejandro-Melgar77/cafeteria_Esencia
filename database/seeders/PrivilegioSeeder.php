@@ -64,6 +64,21 @@ class PrivilegioSeeder extends Seeder
             ['Funcion' => 'editar recetas'],
             ['Funcion' => 'eliminar recetas'],
 
+            ['Funcion' => 'ver menus'],
+            ['Funcion' => 'crear menus'],
+            ['Funcion' => 'editar menus'],
+            ['Funcion' => 'eliminar menus'],
+
+            ['Funcion' => 'ver mesas'],
+            ['Funcion' => 'crear mesas'],
+            ['Funcion' => 'editar mesas'],
+            ['Funcion' => 'eliminar mesas'],
+
+            ['Funcion' => 'ver reservas'],
+            ['Funcion' => 'crear reservas'],
+            ['Funcion' => 'editar reservas'],
+            ['Funcion' => 'eliminar reservas'],
+
             ['Funcion' => 'ver nota_compra'],
             ['Funcion' => 'crear nota_compra'],
             ['Funcion' => 'editar nota_compra'],

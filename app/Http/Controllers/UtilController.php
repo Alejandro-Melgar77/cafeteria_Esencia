@@ -47,6 +47,9 @@ class UtilController extends Controller
             'User' => 'users',
             'Usuario' => 'usuarios',
             'Receta' => 'recetas',
+            'Menu' => 'menus',
+            'Mesas' => 'mesas',
+            'Reservas' => 'reservas',
             'Nota De Compra' => 'nota_compra',
             'Nota De salida' => 'nota_salida',
         ];

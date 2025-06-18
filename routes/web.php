@@ -7,9 +7,13 @@ use App\Http\Controllers\IngredienteController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\MetodoPagoController;
 use App\Http\Controllers\NotaDeCompraController;
+use App\Http\Controllers\NotaDeSalidaController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PrivilegioController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\MesaController;
+use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RolController;
@@ -140,31 +144,44 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::put('recetas/{id}', [RecetaController::class, 'update'])->middleware('permiso:editar recetas')->name('recetas.update');
     Route::delete('recetas/{id}', [RecetaController::class, 'destroy'])->middleware('permiso:eliminar recetas')->name('recetas.destroy');
 
-
     //nota_compra
-
-    Route::get('nota_compra/crear', [NotaDeCompraController::class, 'create'])->name('nota_compra.create');
-    Route::post('nota_compra/guardar', [NotaDeCompraController::class, 'store'])->name('nota_compra.store');
-    Route::get('nota_compra/pdf/{codigo}', [NotaDeCompraController::class, 'showPDF'])->name('nota_compra.show_pdf');
-    Route::get('nota_compra/reporte', [NotaDeCompraController::class, 'reporte'])->name('nota_compra.reporte');
-
+    Route::get('nota_compra/crear', [NotaDeCompraController::class, 'create'])->middleware('permiso:crear nota_compra')->name('nota_compra.create');
+    Route::post('nota_compra/guardar', [NotaDeCompraController::class, 'store'])->middleware('permiso:crear nota_compra')->name('nota_compra.store');
+    Route::get('nota_compra/pdf/{codigo}', [NotaDeCompraController::class, 'showPDF'])->middleware('permiso:ver nota_compra')->name('nota_compra.show_pdf');
+    Route::get('nota_compra/reporte', [NotaDeCompraController::class, 'reporte'])->middleware('permiso:ver nota_compra')->name('nota_compra.reporte');
 
     // Nota de Salida
-    Route::get('nota_salida/crear', [App\Http\Controllers\NotaDeSalidaController::class, 'create'])
-        ->middleware('permiso:crear nota_salida')
-        ->name('nota_salida.create');
+    Route::get('nota_salida/crear', [NotaDeSalidaController::class, 'create'])->middleware('permiso:crear nota_salida')->name('nota_salida.create');
+    Route::post('nota_salida/guardar', [NotaDeSalidaController::class, 'store'])->middleware('permiso:crear nota_salida')->name('nota_salida.store');
+    Route::get('nota_salida/pdf/{codigo}', [NotaDeSalidaController::class, 'showPDF'])->middleware('permiso:ver nota_salida')->name('nota_salida.show_pdf');
+    Route::get('nota_salida/reporte', [NotaDeSalidaController::class, 'reporte'])->middleware('permiso:ver nota_salida')->name('nota_salida.reporte');
 
-    Route::post('nota_salida/guardar', [App\Http\Controllers\NotaDeSalidaController::class, 'store'])
-        ->middleware('permiso:crear nota_salida')
-        ->name('nota_salida.store');
+    // Mesas
+    Route::get('mesas', [MesaController::class, 'index'])->middleware('permiso:ver mesas')->name('mesas.index');
+    Route::get('mesas/create', [MesaController::class, 'create'])->middleware('permiso:crear mesas')->name('mesas.create');
+    Route::post('mesas', [MesaController::class, 'store'])->middleware('permiso:crear mesas')->name('mesas.store');
+    Route::get('mesas/{id}', [MesaController::class, 'show'])->middleware('permiso:ver mesas')->name('mesas.show');
+    Route::get('mesas/{id}/edit', [MesaController::class, 'edit'])->middleware('permiso:editar mesas')->name('mesas.edit');
+    Route::put('mesas/{id}', [MesaController::class, 'update'])->middleware('permiso:editar mesas')->name('mesas.update');
+    Route::delete('mesas/{id}', [MesaController::class, 'destroy'])->middleware('permiso:eliminar mesas')->name('mesas.destroy');
 
-    Route::get('nota_salida/pdf/{codigo}', [App\Http\Controllers\NotaDeSalidaController::class, 'showPDF'])
-        ->middleware('permiso:ver nota_salida')
-        ->name('nota_salida.show_pdf');
+    // Menus
+    Route::get('menus', [MenuController::class, 'index'])->middleware('permiso:ver menus')->name('menus.index');
+    Route::get('menus/create', [MenuController::class, 'create'])->middleware('permiso:crear menus')->name('menus.create');
+    Route::post('menus', [MenuController::class, 'store'])->middleware('permiso:crear menus')->name('menus.store');
+    Route::get('menus/{id}', [MenuController::class, 'show'])->middleware('permiso:ver menus')->name('menus.show');
+    Route::get('menus/{id}/edit', [MenuController::class, 'edit'])->middleware('permiso:editar menus')->name('menus.edit');
+    Route::put('menus/{id}', [MenuController::class, 'update'])->middleware('permiso:editar menus')->name('menus.update');
+    Route::delete('menus/{id}', [MenuController::class, 'destroy'])->middleware('permiso:eliminar menus')->name('menus.destroy');
 
-    Route::get('nota_salida/reporte', [App\Http\Controllers\NotaDeSalidaController::class, 'reporte'])
-        ->middleware('permiso:ver nota_salida')
-        ->name('nota_salida.reporte');
+    // Reservas
+    Route::get('reservas', [ReservaController::class, 'index'])->middleware('permiso:ver reservas')->name('reservas.index');
+    Route::get('reservas/create', [ReservaController::class, 'create'])->middleware('permiso:crear reservas')->name('reservas.create');
+    Route::post('reservas', [ReservaController::class, 'store'])->middleware('permiso:crear reservas')->name('reservas.store');
+    Route::get('reservas/{id}', [ReservaController::class, 'show'])->middleware('permiso:ver reservas')->name('reservas.show');
+    Route::get('reservas/{id}/edit', [ReservaController::class, 'edit'])->middleware('permiso:editar reservas')->name('reservas.edit');
+    Route::put('reservas/{id}', [ReservaController::class, 'update'])->middleware('permiso:editar reservas')->name('reservas.update');
+    Route::delete('reservas/{id}', [ReservaController::class, 'destroy'])->middleware('permiso:eliminar reservas')->name('reservas.destroy');
 });
 
 // Rutas para ADMINISTRADOR, PERSONAL y CLIENTES
