@@ -18,4 +18,13 @@ class Inventario extends Model
     public function ingredientes() : HasOne {
         return $this->hasOne(Ingrediente::class,'id');
     }
+    public function notasDeVenta(): BelongsToMany
+    {
+        return $this->belongsToMany(NotaDeVenta::class, 'detalles_de_venta')
+                    ->using(DetalleDeVenta::class)
+                    ->withPivot('cantidad', 'created_at', 'updated_at');
+    }
 }
+
+
+

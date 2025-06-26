@@ -126,71 +126,104 @@
 
             </div>
         </header>
-
+        
         <div class="h-screen z-10 relative mt-20">
 
             <?php
+            $productos = [];
+            $totalNum = 0;
+            $totalFormatted = 'Carrito vacío';
             if (isset($_GET['carrito'])) {
                 $carrito = $_GET['carrito'];
-                if (!is_array($carrito)) {
-                    $carrito = json_decode($carrito, true);
-                    $total = 0;
-                    foreach ($carrito as $item) {
-                        $total += $item['precio'] * $item['cantidad'];
-                        $productos[] = [
-                            'id' => $item['id'],
-                            'nombre' => $item['nombre'],
-                            'cantidad' => $item['cantidad'],
-                            'precio' => $item['precio'],
-                        ];
+                if (!empty($carrito)) {
+                    $carrito = json_decode(urldecode($carrito), true);
+
+                    if (is_array($carrito)) {
+                        foreach ($carrito as $item) {
+                            $totalNum += $item['precio'] * $item['cantidad'];
+                            $productos[] = [
+                                'id' => $item['id'],
+                                'nombre' => $item['nombre'],
+                                'cantidad' => $item['cantidad'],
+                                'precio' => $item['precio'],
+                            ];
+                        }
+                        $totalFormatted = 'Bs. ' . number_format($totalNum, 2);
                     }
-                    $total = 'Bs. ' . number_format($total, 2);
-                } else {
-                    $total = 'Carrito vacío';
                 }
             }
             ?>
 
             <div class="container mx-auto px-4 py-8">
                 <h1 class="text-3xl font-bold text-brown-800 dark:text-brown-200 mb-6">Métodos de Pago</h1>
+                    
+                @if(session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                    
                 <p class="text-gray-700 dark:text-gray-300 mb-4">Seleccione su método de pago preferido:</p>
-
+                    
                 <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
-                    <div class="bg-white dark:bg-brown-700 rounded-lg shadow-lg p-6 flex">
-                        <div class="flex flex-col">
-                            <h2 class="text-xl font-semibold text-brown-800 dark:text-brown-200 mb-4">Monto total:
-                                {{ $total }}</h2>
+                    <div class="bg-white dark:bg-brown-700 rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
+                        <div class="flex flex-col mb-6 md:mb-0 md:mr-6">
+                            <h2 class="text-xl font-semibold text-brown-800 dark:text-brown-200 mb-4">
+                                Monto total: {{ $totalFormatted }}
+                            </h2>
+                            
                             <p class="text-gray-600 dark:text-gray-300 mb-4">Pague de forma segura.</p>
+                            
                             <?php
                             use App\Models\MetodoPago;
                             $metodoPagos = MetodoPago::all();
                             ?>
+                            
                             <div class="flex flex-col gap-2 justify-center">
                                 @foreach ($metodoPagos as $metodoPago)
-                                    <button
-                                        onclick="addCart({{ $metodoPago->id }}, '{{ $metodoPago->nombre }}', {{ $metodoPago->precio }})"
-                                        class="bg-brown-500 text-white px-12 py-4 w-48 rounded hover:bg-brown-600 transition-colors mb-2 cursor-pointer">
-                                        {{ $metodoPago->nombre }}
-                                    </button>
+                                    @if($metodoPago->nombre === 'Paypal')
+                                        @if(!empty($productos))
+                                            <form action="{{ route('paypal.create') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="carrito" value="{{ json_encode($productos) }}">
+                                                <input type="hidden" name="total" value="{{ $totalNum }}">
+                                                <button type="submit" class="bg-blue-500 text-white px-12 py-4 w-48 rounded hover:bg-blue-600 transition-colors mb-2 cursor-pointer flex items-center justify-center">
+                                                    <i class="fab fa-paypal mr-2"></i> {{ $metodoPago->nombre }}
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button class="bg-gray-400 text-gray-700 px-12 py-4 w-48 rounded mb-2 cursor-not-allowed" disabled>
+                                                <i class="fab fa-paypal mr-2"></i> {{ $metodoPago->nombre }}
+                                            </button>
+                                        @endif
+                                    @else
+                                        <button
+                                            onclick="addCart({{ $metodoPago->id }}, '{{ $metodoPago->nombre }}', {{ $metodoPago->precio ?? 0 }})"
+                                            class="bg-brown-500 text-white px-12 py-4 w-48 rounded hover:bg-brown-600 transition-colors mb-2 cursor-pointer">
+                                            {{ $metodoPago->nombre }}
+                                        </button>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>
-                        <div id="productos" class="flex flex-col ml-6">
-                            @if (isset($productos))
-                                <h3 class="text-lg font-semibold text-brown-800 dark:text-brown-200">Productos
-                                    seleccionados:</h3>
+                        
+                        <div id="productos" class="flex flex-col">
+                            @if (!empty($productos))
+                                <h3 class="text-lg font-semibold text-brown-800 dark:text-brown-200 mb-2">
+                                    Productos seleccionados:
+                                </h3>
                                 <ul class="list-disc pl-6">
                                     @foreach ($productos as $producto)
-                                        <li class="text-gray-600 dark:text-gray-300">
-                                            {{ $producto['nombre'] }} - Cantidad: {{ $producto['cantidad'] }}
-                                            - Precio: Bs. {{ number_format($producto['precio'], 2) }}
+                                        <li class="text-gray-600 dark:text-gray-300 mb-1">
+                                            {{ $producto['nombre'] }} - 
+                                            Cantidad: {{ $producto['cantidad'] }} - 
+                                            Precio: Bs. {{ number_format($producto['precio'], 2) }}
                                         </li>
                                     @endforeach
                                 </ul>
                             @else
                                 <p class="text-gray-600 dark:text-gray-300">No hay productos seleccionados.</p>
                             @endif
-
                         </div>
                     </div>
 

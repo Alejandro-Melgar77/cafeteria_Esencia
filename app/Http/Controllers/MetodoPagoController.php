@@ -10,9 +10,9 @@ class MetodoPagoController extends Controller
     /**
      * Display a listing of the resource.
      */
-     public function index() {
-        $metodos = MetodoPago::all();
-        return view('metodo_pago.index', compact('metodos'));
+    public function index() {
+        $metodosPago = MetodoPago::paginate(10);
+        return view('metodo_pago.index', compact('metodosPago'));
     }
 
     public function create() {
@@ -21,28 +21,35 @@ class MetodoPagoController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'nombre' => 'required|string|unique:metodos_pago,nombre',
+            'nombre' => 'required|string|max:100|unique:metodos_pago,nombre',
             'saldo' => 'nullable|numeric|min:0',
+            'descripcion' => 'nullable|string'
         ]);
         MetodoPago::create($request->all());
-        return redirect()->route('metodos_pago.index')->with('success', 'Método de pago registrado.');
+        return redirect()->route('metodo_pago.index')->with('success', 'Método de pago registrado correctamente.');
     }
 
-    public function edit(MetodoPago $metodo) {
-        return view('metodo_pago.edit', compact('metodo'));
+    public function show(MetodoPago $metodoPago) {
+        return view('metodo_pago.show', compact('metodoPago'));
+    }   
+
+    public function edit(MetodoPago $metodoPago) {
+        return view('metodo_pago.edit', compact('metodoPago'));
     }
 
-    public function update(Request $request, MetodoPago $metodo) {
+    public function update(Request $request, MetodoPago $metodoPago) {
         $request->validate([
-            'nombre' => 'required|string|unique:metodos_pago,nombre,' . $metodo->id,
+            'nombre' => 'required|string|max:100|unique:metodos_pago,nombre,' . $metodoPago->id,
             'saldo' => 'nullable|numeric|min:0',
+            'descripcion' => 'nullable|string'
         ]);
-        $metodo->update($request->all());
-        return redirect()->route('metodos_pago.index')->with('success', 'Método actualizado.');
+        
+        $metodoPago->update($request->all());
+        return redirect()->route('metodo_pago.index')->with('success', 'Método de pago actualizado correctamente.');
     }
 
-    public function destroy(MetodoPago $metodo) {
-        $metodo->delete();
-        return back()->with('success', 'Método eliminado.');
+    public function destroy(MetodoPago $metodoPago) {
+        $metodoPago->delete();
+        return back()->with('success', 'Método de pago eliminado correctamente.');
     }
 }

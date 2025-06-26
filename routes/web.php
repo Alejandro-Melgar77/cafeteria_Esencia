@@ -10,8 +10,12 @@ use App\Http\Controllers\NotaDeCompraController;
 use App\Http\Controllers\NotaDeSalidaController;
 use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\PrivilegioController;
+use App\Http\Controllers\NotaDeVentaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\MesaController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\ComprobanteController;
 use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RecetaController;
@@ -39,17 +43,30 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 });
+
 Route::get('/comprar_productos', function () {
     return view('productos');
 })->name("comprar_productos");
 
-Route::get('/metodo_pago', function () {
+// Route::get('/metodo_pago', function () {
+//    return view('metodoPagos.pago');
+// })->name("metodo_pago");
+// Route::post('/metodo_pago', [UtilController::class, 'metodoPago'])->middleware('auth')->name("metodo_pago.post");
+
+
+//------------------
+ Route::get('/metodo_pagoU', function () {
     return view('metodoPagos.pago');
 })->name("metodo_pago");
-Route::post('/metodo_pago', [UtilController::class, 'metodoPago'])->middleware('auth')->name("metodo_pago.post");
+Route::post('/metodo_pagoU', [UtilController::class, 'metodoPago'])->middleware('auth')->name("metodo_pago.post");
 
-
-
+// Rutas PayPal
+Route::post('/paypal/create', [PayPalController::class, 'createPayment'])->name('paypal.create');
+Route::get('/paypal/success', [PayPalController::class, 'success'])->name('paypal.success');
+Route::get('/paypal/cancel', [PayPalController::class, 'cancel'])->name('paypal.cancel');
+Route::get('/gracias', function() {
+    return view('gracias');
+})->name('gracias');
 
 // Rutas solo para ADMINISTRADOR
 Route::middleware(['auth', 'rol:administrador'])->group(function () {
@@ -79,13 +96,13 @@ Route::middleware(['auth', 'rol:administrador'])->group(function () {
 
 
     //metodo de pago
-    Route::get('metodos_pago', [MetodoPagoController::class, 'index'])->name('metodos_pago.index')->middleware(['auth', 'permiso:ver metodos']);
-    Route::get('metodos_pago/{metodo_pago}', [MetodoPagoController::class, 'show'])->name('metodos_pago.show')->middleware(['auth', 'permiso:ver metodos']);
-    Route::get('metodos_pago/create', [MetodoPagoController::class, 'create'])->name('metodos_pago.create')->middleware(['auth', 'permiso:crear metodos']);
-    Route::post('metodos_pago', [MetodoPagoController::class, 'store'])->name('metodos_pago.store')->middleware(['auth', 'permiso:crear metodos']);
-    Route::get('metodos_pago/{metodo_pago}/edit', [MetodoPagoController::class, 'edit'])->name('metodos_pago.edit')->middleware(['auth', 'permiso:editar metodos']);
-    Route::put('metodos_pago/{metodo_pago}', [MetodoPagoController::class, 'update'])->name('metodos_pago.update')->middleware(['auth', 'permiso:editar metodos']);
-    Route::delete('metodos_pago/{metodo_pago}', [MetodoPagoController::class, 'destroy'])->name('metodos_pago.destroy')->middleware(['auth', 'permiso:eliminar metodos']);
+    Route::get('metodos-pago', [MetodoPagoController::class, 'index'])->name('metodos-pago.index')->middleware(['auth', 'permiso:ver metodos']);
+    Route::get('metodos-pago/{metodo_pago}', [MetodoPagoController::class, 'show'])->name('metodos-pago.show')->middleware(['auth', 'permiso:ver metodos']);
+    Route::get('metodos-pago/create', [MetodoPagoController::class, 'create'])->name('metodos-pago.create')->middleware(['auth', 'permiso:crear metodos']);
+    Route::post('metodos-pago', [MetodoPagoController::class, 'store'])->name('metodos-pago.store')->middleware(['auth', 'permiso:crear metodos']);
+    Route::get('metodos-pago/{metodo_pago}/edit', [MetodoPagoController::class, 'edit'])->name('metodos-pago.edit')->middleware(['auth', 'permiso:editar metodos']);
+    Route::put('metodos-pago/{metodo_pago}', [MetodoPagoController::class, 'update'])->name('metodos-pago.update')->middleware(['auth', 'permiso:editar metodos']);
+    Route::delete('metodos-pago/{metodo_pago}', [MetodoPagoController::class, 'destroy'])->name('metodos-pago.destroy')->middleware(['auth', 'permiso:eliminar metodos']);
 });
 
 
@@ -193,6 +210,28 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::get('reservas/{id}/edit', [ReservaController::class, 'edit'])->middleware('permiso:editar reservas')->name('reservas.edit');
     Route::put('reservas/{id}', [ReservaController::class, 'update'])->middleware('permiso:editar reservas')->name('reservas.update');
     Route::delete('reservas/{id}', [ReservaController::class, 'destroy'])->middleware('permiso:eliminar reservas')->name('reservas.destroy');
+
+    // Nota de Venta
+    Route::get('nota_venta', [NotaDeVentaController::class, 'index'])->middleware('permiso:ver nota_venta')->name('nota_venta.index');
+    Route::get('nota_venta/create', [NotaDeVentaController::class, 'create'])->middleware('permiso:crear nota_venta')->name('nota_venta.create');
+    Route::post('nota_venta', [NotaDeVentaController::class, 'store'])->middleware('permiso:crear nota_venta')->name('nota_venta.store');
+    Route::get('nota_venta/{id}', [NotaDeVentaController::class, 'show'])->middleware('permiso:ver nota_venta')->name('nota_venta.show');
+    Route::get('nota_venta/{id}/edit', [NotaDeVentaController::class, 'edit'])->middleware('permiso:editar nota_venta')->name('nota_venta.edit');
+    Route::put('nota_venta/{id}', [NotaDeVentaController::class, 'update'])->middleware('permiso:editar nota_venta')->name('nota_venta.update');
+    Route::delete('nota_venta/{id}', [NotaDeVentaController::class, 'destroy'])->middleware('permiso:eliminar nota_venta')->name('nota_venta.destroy');
+    // Pagos
+    Route::get('pagos', [PagoController::class, 'index'])->middleware('permiso:ver pagos')->name('pagos.index');
+    // Metodos de Pago //COMENTAR SI PASA ALGO
+    Route::get('metodo_pago', [MetodoPagoController::class, 'index'])->name('metodo_pago.index');
+    Route::get('metodo_pago/create', [MetodoPagoController::class, 'create'])->name('metodo_pago.create');
+    Route::post('metodo_pago', [MetodoPagoController::class, 'store'])->name('metodo_pago.store');
+    Route::get('metodo_pago/{metodoPago}', [MetodoPagoController::class, 'show'])->name('metodo_pago.show'); 
+    Route::get('metodo_pago/{metodoPago}/edit', [MetodoPagoController::class, 'edit'])->name('metodo_pago.edit'); 
+    Route::put('metodo_pago/{metodoPago}', [MetodoPagoController::class, 'update'])->name('metodo_pago.update'); 
+    Route::delete('metodo_pago/{metodoPago}', [MetodoPagoController::class, 'destroy'])->name('metodo_pago.destroy'); 
+    // Comprobantes
+    Route::get('comprobantes', [ComprobanteController::class, 'index'])->name('comprobantes.index');
+    Route::get('comprobante/generar/{id}', [ComprobanteController::class, 'generar'])->name('comprobantes.generar');
 });
 
 // Rutas para ADMINISTRADOR, PERSONAL y CLIENTES

@@ -52,6 +52,10 @@ class UtilController extends Controller
             'Reservas' => 'reservas',
             'Nota De Compra' => 'nota_compra',
             'Nota De salida' => 'nota_salida',
+            'Nota De venta' => 'nota_venta',
+            'Pagos' => 'pagos',
+            'Metodos de Pago' => 'metodo_pago',
+            'Comprobantes' => 'comprobantes',
         ];
 
         return collect($modelStrings)->mapWithKeys(function ($value, $key) {

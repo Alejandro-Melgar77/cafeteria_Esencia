@@ -333,10 +333,13 @@
                 alert("El carrito está vacío. Agrega productos antes de proceder.");
                 return;
             }
+            
+            // Convertir el carrito a JSON y codificarlo para URL
             const carritoJson = JSON.stringify(carrito);
-            const str = encodeURIComponent(carritoJson);
-            window.location.href = `{{ route('metodo_pago') }}?carrito=${str}`;
-
+            const carritoCodificado = encodeURIComponent(carritoJson);
+            
+            // Redirigir a la página de métodos de pago
+            window.location.href = "{{ route('metodo_pago') }}?carrito=" + carritoCodificado;
         }
 
         function openSidebar() {

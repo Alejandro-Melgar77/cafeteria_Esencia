@@ -58,9 +58,10 @@
                 'titulo' => 'Gestionar Ventas',
                 'tipo' => 'grupo',
                 'items' => [
-                    //'Gestionar pagos' => 'pagos.index',
-                    //'Gestionar Nota de Venta' => 'nota_venta.index',
-                    //'Gestionar comprobantes' => 'comprobantes.index'
+                    'Gestionar Metodos de Pago' => 'metodo_pago.index',
+                    'Gestionar pagos' => 'pagos.index',
+                    'Gestionar Nota de Venta' => 'nota_venta.index',
+                    'Gestionar comprobantes' => 'comprobantes.index'
                 ],
             ],
         ],

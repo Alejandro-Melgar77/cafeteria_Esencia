@@ -19,6 +19,11 @@ class Usuario extends Model
         return $this->belongsTo(Rol::class, 'RolID');
     }
 
+    public function notasDeVenta()
+    {
+        return $this->hasMany(NotaDeVenta::class);
+    }
+
     public function tienePrivilegio($privilegio)
     {
         return $this->rol ? $this->rol->privilegios->contains('Funcion', $privilegio) : false;
@@ -34,3 +39,5 @@ class Usuario extends Model
         return $query->whereHas('rol', fn($q) => $q->where('Cargo', 'Personal'));
     }
 }
+
+
