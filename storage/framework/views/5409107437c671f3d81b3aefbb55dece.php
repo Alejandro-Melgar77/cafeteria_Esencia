@@ -2,20 +2,58 @@
 <html lang="en">
 
 <head>
-    @include('partials.head')
+    <?php echo $__env->make('partials.head', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
 </head>
 
 <body class="bg-coffee dark:bg-brown-900 relative">
     <div class="float-button fixed right-4 bottom-4 z-50">
         <button onclick="toggleTheme()"
             class="bg-brown-400 p-2 rounded-full hover:bg-brown-200 group cursor-pointer size-10">
-            <x-heroicon-o-sun id="icon-sun" class="h-6 w-6 text-brown-100 group-hover:text-black" />
-            <x-heroicon-o-moon id="icon-moon" class="h-6 w-6 text-brown-100 group-hover:text-black hidden" />
+            <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-sun'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['id' => 'icon-sun','class' => 'h-6 w-6 text-brown-100 group-hover:text-black']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+            <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-moon'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['id' => 'icon-moon','class' => 'h-6 w-6 text-brown-100 group-hover:text-black hidden']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
         </button>
     </div>
 
     <div class="flex flex-col dark:text-coffee min-h-screen transition-colors duration-300">
-        <img src="{{ asset('images/coffee2.webp') }}" alt="Fondo semillas"
+        <img src="<?php echo e(asset('images/coffee2.webp')); ?>" alt="Fondo semillas"
             class="absolute right-0 top-10 object-cover size-[800px] mask-l-from-30% z-0 pointer-events-none opacity-50" />
         <!-- Sidebar animado para móviles -->
         <div id="mobileSidebarBackdrop" class="fixed inset-0 z-30 bg-black/30 hidden" onclick="closeSidebar()">
@@ -24,12 +62,31 @@
                 onclick="event.stopPropagation()">
                 <div class="flex flex-col px-6">
                     <button onclick="closeSidebar()" class="text-brown-500 hover:text-orange-500 mb-4 cursor-pointer">
-                        <x-heroicon-o-x-mark class="h-6 w-6" />
+                        <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-x-mark'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'h-6 w-6']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
                         <i class="fa-solid fa-xmark fa-sm"></i>
                     </button>
                     <div class="items-center flex pb-6">
-                        <a href="{{ url('/') }}" class="flex items-center">
-                            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-14 w-auto" />
+                        <a href="<?php echo e(url('/')); ?>" class="flex items-center">
+                            <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Logo" class="h-14 w-auto" />
                             <div class="flex flex-col ml-3">
                                 <span class="text-lg font-medium text-brown-700 dark:text-brown-200">Cafeteria</span>
                                 <span class="text-xl font-semibold text-brown-700 dark:text-brown-200">La Esencia</span>
@@ -37,7 +94,7 @@
                         </a>
                     </div>
                 </div>
-                @include('partials.nav')
+                <?php echo $__env->make('partials.nav', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?>
             </div>
         </div>
 
@@ -46,13 +103,32 @@
             <div class="flex items-center md:hidden">
                 <button onclick="openSidebar()"
                     class="ml-6 flex justify-center items-center rounded-full size-10 text-brown-600 dark:text-brown-200 hover:text-orange-400 hover:bg-brown-200 cursor-pointer">
-                    <x-heroicon-o-bars-3 class="h-6 w-6" />
+                    <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-bars-3'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'h-6 w-6']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
                 </button>
             </div>
 
             <div class="items-center hidden md:flex w-64 h-full dark:bg-brown-800 px-4">
-                <a href="{{ url('/') }}" class="flex items-center">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="h-16 w-auto" />
+                <a href="<?php echo e(url('/')); ?>" class="flex items-center">
+                    <img src="<?php echo e(asset('images/logo.png')); ?>" alt="Logo" class="h-16 w-auto" />
                     <div class="flex flex-col ml-3">
                         <span class="text-lg font-medium text-brown-700 dark:text-brown-200">Cafeteria</span>
                         <span class="text-2xl font-bold text-brown-700 dark:text-brown-200">La Esencia</span>
@@ -61,42 +137,80 @@
             </div>
 
             <nav class="justify-self-center items-center text-sm font-medium hidden md:flex">
-                <a href="{{ url('/') }}"
+                <a href="<?php echo e(url('/')); ?>"
                     class="text-brown-500 dark:text-brown-200 hover:text-orange-400 py-2 px-4">Inicio</a>
-                <a href="{{ route('comprar_productos') }}"
+                <a href="<?php echo e(route('comprar_productos')); ?>"
                     class="text-brown-500 dark:text-brown-200 hover:text-orange-400 p-2 px-4">Productos</a>
 
-                @auth
-                    <a href="{{ route('dashboard') }}"
+                <?php if(auth()->guard()->check()): ?>
+                    <a href="<?php echo e(route('dashboard')); ?>"
                         class="text-brown-500 dark:text-brown-200 hover:text-orange-400 p-2 px-4">Panel de control</a>
-                @else
+                <?php else: ?>
                     <a href="#contacto"
                         class="text-brown-500 dark:text-brown-200 hover:text-orange-400 p-2 px-4">Contacto</a>
 
-                @endauth
+                <?php endif; ?>
             </nav>
 
             <div class="flex justify-end items-center gap-2 px-6">
                 <div class="relative block">
                     <button class="absolute left-2 top-1/2 -translate-y-1/2 cursor-pointer" onclick="openSearch()">
-                        <x-heroicon-o-magnifying-glass class="size-6 text-brown-800 dark:text-brown-300" />
+                        <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-magnifying-glass'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'size-6 text-brown-800 dark:text-brown-300']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
                     </button>
                     <input type="text" placeholder="Buscar..." id="searchInput"
                         class="bg-white placeholder:text-brown-400 dark:bg-brown-600 rounded-full focus:rounded-2xl focus:w-42 transition-all duration-300 shadow pl-8 focus:pl-10 pr-3 py-3 w-0 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-600" />
                 </div>
 
-                @guest
+                <?php if(auth()->guard()->guest()): ?>
                     <div class="hidden lg:flex gap-2 items-center">
-                        <a href="{{ route('login') }}"
+                        <a href="<?php echo e(route('login')); ?>"
                             class="text-xs font-semibold hover:text-orange-300 text-brown-200 border-2 border-brown-500 bg-brown-500 rounded-4xl py-3 px-3">Iniciar
                             sesión</a>
-                        <a href="{{ route('register') }}"
+                        <a href="<?php echo e(route('register')); ?>"
                             class="text-xs font-semibold hover:text-orange-300 text-brown-600 bg-coffee border-2 border-brown-500 rounded-4xl py-3 px-3">Registrarse</a>
                     </div>
-                @endguest
+                <?php endif; ?>
 
                 <button class="bg-brown-400 p-2 rounded-full hover:bg-brown-200 group cursor-pointer size-10">
-                    <x-heroicon-o-shopping-cart class="h-6 w-6 text-brown-100 group-hover:text-black" />
+                    <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-shopping-cart'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'h-6 w-6 text-brown-100 group-hover:text-black']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
                 </button>
             </div>
         </header>
@@ -113,17 +227,36 @@
                             Disfruta de los mejores productos y un ambiente acogedor.
                         </p>
                         <div class="flex items-center gap-4">
-                            <a href="{{ route('comprar_productos') }}"
+                            <a href="<?php echo e(route('comprar_productos')); ?>"
                                 class="w-48 justify-center flex bg-yellow-950 hover:bg-yellow-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg">Pedir
                                 ahora
-                                <x-heroicon-o-arrow-right class="h-5 w-5 ml-2" />
+                                <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-o-arrow-right'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'h-5 w-5 ml-2']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
                             </a>
                             <a href="#" class="text-orange-400 hover:text-yellow-950">Ver menú</a>
                         </div>
                     </div>
                     <div class="flex h-full w-full justify-center items-center">
                         <div class="relative p-6">
-                            <img src="{{ asset('images/hero1.webp') }}" alt="Hero Image"
+                            <img src="<?php echo e(asset('images/hero1.webp')); ?>" alt="Hero Image"
                                 class="size-64 md:size-72 rounded-full justify-center object-cover" />
                             <!-- informacion flotante -->
                             <div
@@ -138,7 +271,26 @@
                                 <h2
                                     class="bg-white text-brown-600 my-1 mx-1 absolute inset-0 rounded-4xl w-20 h-10 flex items-center justify-center font-bold">
                                     4.8
-                                    <x-heroicon-s-star class="text-yellow-400 size-4 ml-1" />
+                                    <?php if (isset($component)) { $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c = $attributes; } ?>
+<?php $component = BladeUI\Icons\Components\Svg::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('heroicon-s-star'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\BladeUI\Icons\Components\Svg::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['class' => 'text-yellow-400 size-4 ml-1']); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $attributes = $__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__attributesOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c)): ?>
+<?php $component = $__componentOriginal643fe1b47aec0b76658e1a0200b34b2c; ?>
+<?php unset($__componentOriginal643fe1b47aec0b76658e1a0200b34b2c); ?>
+<?php endif; ?>
                                     <i class="fa-solid fa-star text-yellow-400 fa-sm ml-1"></i>
                                 </h2>
                             </div>
@@ -165,7 +317,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                         <div
                             class="flex flex-col bg-white shadow-lg rounded-2xl p-4 hover:scale-105 transition-transform duration-300">
-                            <img src="{{ asset('images/vanillalatte.jpg') }}" alt="Hero Image"
+                            <img src="<?php echo e(asset('images/vanillalatte.jpg')); ?>" alt="Hero Image"
                                 class="flex items-center justify-center w-full h-52 object-cover rounded-xl" />
                             <div class="flex items-center justify-between p-4">
                                 <h2 class="text-lg font-bold text-brown-800">
@@ -189,7 +341,7 @@
                         </div>
                         <div
                             class="flex flex-col bg-white shadow-lg rounded-2xl p-4 hover:scale-105 transition-transform duration-300">
-                            <img src="{{ asset('images/espresso.webp') }}" alt="Hero Image"
+                            <img src="<?php echo e(asset('images/espresso.webp')); ?>" alt="Hero Image"
                                 class="w-full h-52 object-cover justify-center rounded-xl" />
                             <div class="flex items-center justify-between p-4">
                                 <h2 class="text-lg font-bold text-brown-800">Espresso</h2>
@@ -211,7 +363,7 @@
                         </div>
                         <div
                             class="flex flex-col bg-white shadow-lg rounded-2xl p-4 hover:scale-105 transition-transform duration-300">
-                            <img src="{{ asset('images/Hazelnut-Latte.jpg') }}" alt="Hero Image"
+                            <img src="<?php echo e(asset('images/Hazelnut-Latte.jpg')); ?>" alt="Hero Image"
                                 class="w-full h-52 object-cover justify-center rounded-xl" />
                             <div class="flex items-center justify-between p-4">
                                 <h2 class="text-lg font-bold text-brown-800">
@@ -248,7 +400,7 @@
                 <div class="flex flex-col md:flex-row items-center gap-4 justify-around pb-16">
                     <div class="flex flex-col items-center gap-2">
                         <div class="flex justify-center p-2">
-                            <img src="{{ asset('images/pasos.png') }}" alt="cafe1" class="size-48" />
+                            <img src="<?php echo e(asset('images/pasos.png')); ?>" alt="cafe1" class="size-48" />
                         </div>
                         <h2 class="text-lg font-bold text-brown-800 mt-2">
                             Elige tu café
@@ -258,7 +410,7 @@
 
                     <div class="flex flex-col items-center gap-2">
                         <div class="flex justify-center p-2">
-                            <img src="{{ asset('images/pasos.png') }}" alt="cafe1" class="size-48" />
+                            <img src="<?php echo e(asset('images/pasos.png')); ?>" alt="cafe1" class="size-48" />
                         </div>
                         <h2 class="text-lg font-bold text-brown-800 mt-2">
                             Te lo llevamos hasta tí
@@ -270,7 +422,7 @@
 
                     <div class="flex flex-col items-center gap-2">
                         <div class="flex justify-center p-2">
-                            <img src="{{ asset('images/pasos.png') }}" alt="cafe1" class="size-48" />
+                            <img src="<?php echo e(asset('images/pasos.png')); ?>" alt="cafe1" class="size-48" />
                         </div>
                         <h2 class="text-lg font-bold text-brown-800 mt-2">
                             Distruta tu café
@@ -287,7 +439,7 @@
                 <div class="absolute bg-coffee w-full h-[400px] -z-0 bottom-5 left-0 right-0"></div>
                 <div class="h-[400px] flex w-full items-center z-10">
                     <div class="flex w-full justify-center p-4">
-                        <img src="{{ asset('images/fondo-hero2.png') }}" alt="fondo hero 2"
+                        <img src="<?php echo e(asset('images/fondo-hero2.png')); ?>" alt="fondo hero 2"
                             class="rounded-lg border-2 border-white shadow-lg object-cover" />
                     </div>
                     <div class="flex flex-col px-0 lg:px-6 gap-8 justify-end w-full h-full">
@@ -325,11 +477,11 @@
                     </div>
                     <div class="w-2/3 bg-coffee rounded-r-4xl h-full hidden lg:block">
                         <div class="flex absolute gap-4 right-8 top-0 bottom-0 justify-center items-center">
-                            <img src="{{ asset('images/fondo-hero2.png') }}" alt="fondo hero 2"
+                            <img src="<?php echo e(asset('images/fondo-hero2.png')); ?>" alt="fondo hero 2"
                                 class="border-4 border-orange-300 shadow-lg object-cover w-40 h-48 lg:w-52 lg:h-64" />
-                            <img src="{{ asset('images/fondo-hero2.png') }}" alt="fondo hero 2"
+                            <img src="<?php echo e(asset('images/fondo-hero2.png')); ?>" alt="fondo hero 2"
                                 class="border-4 border-orange-300 shadow-lg object-cover w-40 h-48 lg:w-52 lg:h-64" />
-                            <img src="{{ asset('images/fondo-hero2.png') }}" alt="fondo hero 2"
+                            <img src="<?php echo e(asset('images/fondo-hero2.png')); ?>" alt="fondo hero 2"
                                 class="border-4 border-orange-300 shadow-lg object-cover w-40 h-48 lg:w-52 lg:h-64" />
                         </div>
                     </div>
@@ -466,3 +618,4 @@
 </body>
 
 </html>
+<?php /**PATH C:\Users\aleme\Desktop\actualizacion de contraseña cafeteriaEsencia\La-Escencia-master act contra\resources\views/landing.blade.php ENDPATH**/ ?>

@@ -18,7 +18,7 @@
         <img src="{{ asset('images/coffee2.webp') }}" alt="Fondo semillas"
             class="absolute right-0 top-10 object-cover size-[800px] mask-l-from-30% z-0 pointer-events-none opacity-50" />
         <!-- Sidebar animado para móviles -->
-        <div id="mobileSidebarBackdrop" class="fixed inset-0 z-30 bg-black/30 hidden" onclick="closeSidebar()">
+        <div id="mobileSidebarBackdrop" class="fixed inset-0 z-30 bg-black/30 hidden overflow-y-scroll" onclick="closeSidebar()">
             <div id="mobileSidebarPanel"
                 class="bg-brown-100 dark:bg-brown-900 w-64 h-full py-6 shadow-lg transform -translate-x-full transition-transform duration-300"
                 onclick="event.stopPropagation()">
@@ -103,7 +103,7 @@
 
         <div class="h-screen z-10 relative">
             <!-- sidebar -->
-            <div class="hidden md:block fixed top-20 bottom-0">
+            <div class="hidden md:block fixed top-20 bottom-0 overflow-y-scroll">
                 <div class="bg-brown-100 dark:bg-brown-900 w-64 h-full py-6 shadow">
                     @include('partials.nav')
                 </div>

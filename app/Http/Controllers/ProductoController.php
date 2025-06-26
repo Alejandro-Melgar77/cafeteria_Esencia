@@ -6,6 +6,7 @@ use App\Models\Inventario;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -31,6 +32,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $inventarioValidated = $request->validate([
             "nombre" => ["required", "string", "max:100"],
             "fecha_vco" => ["date"],
@@ -41,6 +43,7 @@ class ProductoController extends Controller
             "Precio_venta" => ["required", "numeric", "min:0"],
             "Costo_produccion" => ["required", "numeric", "min:0"],
             "Porcentaje_utilidad" => ["required", "numeric", "min:0"],
+            "photo" => ["image", "mimes:jpg,webp,png,jpeg,gif", "max:8096",],
         ]);
 
         try {
@@ -51,21 +54,42 @@ class ProductoController extends Controller
                     "costo" => $request->costo,
                     "stock" => $request->stock,
                 ]);
+
+
+                // crear un nombre para la imagen que use la fecha y hora actual
+                //dd($request->all());
+                $nombre = time() . '.' . $request->photo->getClientOriginalExtension();
+                if ($request->file('photo')) {
+                    // $request->file('photo')->storeAs('fotos', $nombre, 'public');
+                    try {
+                        //Storage::disk('public')->makeDirectory('fotos');
+                       // $guardado = Storage::disk('public')->putFileAs('fotos', $request->file('photo'), $nombre);
+                        // if (!$guardado) {
+                        //     throw new \Exception('Error al guardar la imagen en el disco');
+                       // }
+                        $request->file('photo')->move(public_path('fotos'), $nombre);
+                        
+            
+                    } catch (\Exception $e) {
+                        throw new \Exception('Error al subir la imagen: ' . $e->getMessage());
+                    }
+                } else {
+                    $nombre = 'default.png'; // Nombre por defecto si no se sube una imagen
+                }
+
                 $producto = Producto::create([
                     "id" => $inventario->id,
                     "Precio_venta" => $request->Precio_venta,
                     "Costo_produccion" => $request->Costo_produccion,
                     "Porcentaje_utilidad" => $request->Porcentaje_utilidad,
+                    "photo" => $nombre,
                 ]);
             });
 
             return redirect()->route('inventarios.index')->with('success', 'Producto creado correctamente');
-
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
         }
-
-
     }
 
     /**
@@ -137,7 +161,6 @@ class ProductoController extends Controller
             });
 
             return redirect()->route('inventarios.index')->with('success', 'Producto eliminado correctamente');
-
         } catch (\Exception $e) {
             return redirect()->back()->with('danger', 'Error: ' . $e->getMessage());
         }

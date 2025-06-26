@@ -17,6 +17,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\RolController;
+use App\Http\Controllers\UtilController;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsPersonalMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,16 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/comprar_productos', function () {
+    return view('productos');
+})->name("comprar_productos");
+
+Route::get('/metodo_pago', function () {
+    return view('metodoPagos.pago');
+})->name("metodo_pago");
+Route::post('/metodo_pago', [UtilController::class, 'metodoPago'])->middleware('auth')->name("metodo_pago.post");
+
+
 
 
 // Rutas solo para ADMINISTRADOR
@@ -205,6 +216,20 @@ Route::middleware(['guest'])->group(function () {
 
     Route::get('register', [AuthController::class, 'formRegister'])->name('register');
     Route::post('register', [AuthController::class, 'register'])->name('register.post');
+
+    // Password Reset Routes
+    Route::get('/forgot-password', [AuthController::class, 'showLinkRequestForm'])
+     ->name('password.request');
+     
+    Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])
+     ->name('password.email');
+     
+    Route::get('/reset-password/{token}', [AuthController::class, 'showResetForm'])
+     ->name('password.reset');
+     
+    Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+     ->name('password.update');
+
 });
 
 

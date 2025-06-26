@@ -19,7 +19,7 @@
             <!-- div para errores -->
             @include('partials.errors')
 
-            <form action="{{ route('productos.store') }}" method="POST">
+            <form action="{{ route('productos.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="mb-4">
                     <label for="nombre"
@@ -100,6 +100,23 @@
                             focus:outline-orange-700 sm:text-sm/6 @error('Porcentaje_utilidad') outline-red-500 @enderror">
                     @error('Porcentaje_utilidad')
                         <p class="text-xs text-red-500 mt-2">{{ $message }}</p>Add commentMore actions
+                    @enderror
+                </div>
+
+                {{-- imagen --}}
+                <!-- imagen -->
+                
+
+
+                <div class="mb-4">
+                    <label for="photo"
+                        class="mb-2 block text-base font-medium text-gray-800 dark:text-gray-200">Imagen</label>
+                    <input type="file" name="photo" id="photo" value="{{ old('photo') }}" 
+                        class="mt-1 w-full px-3 py-2 rounded-lg outline-1 
+                            -outline-offset-1 outline-brown-300 focus:outline-2 
+                            focus:outline-orange-700 sm:text-sm/6 @error('photo') outline-red-500 @enderror">
+                    @error('photo')
+                        <p class="text-xs text-red-500 mt-2">{{ $message }}</p>
                     @enderror
                 </div>
 

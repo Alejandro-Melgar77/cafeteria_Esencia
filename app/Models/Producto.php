@@ -10,7 +10,8 @@ class Producto extends Model
     
     protected $primaryKey = 'id';
     protected $table = "productos";
-    protected $fillable = ['id', 'Precio_venta','Costo_produccion','Porcentaje_utilidad'];
+
+    protected $fillable = ['id', 'Precio_venta','Costo_produccion','Porcentaje_utilidad', 'photo'];
 
     public function inventarios(): BelongsTo {
         return $this->belongsTo(Inventario::class,'id', 'id');

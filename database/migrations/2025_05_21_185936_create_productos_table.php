@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->decimal('Precio_venta', 10, 2);
             $table->decimal('Costo_produccion', 10, 2);
             $table->integer('Porcentaje_utilidad');
+            $table->string('photo')->nullable();
             $table->timestamps();
             $table->foreign('id')->references('id')->on('inventarios')->onDelete('cascade');
         });
