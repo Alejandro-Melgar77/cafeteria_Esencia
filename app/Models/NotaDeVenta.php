@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo; // Importar BelongsTo para las relaciones belongsTo
 use Illuminate\Database\Eloquent\Relations\BelongsToMany; // Importar correctamente BelongsToMany
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class NotaDeVenta extends Model
 {
@@ -37,5 +38,9 @@ class NotaDeVenta extends Model
     public function comprobante()
     {
         return $this->hasOne(Comprobante::class);
+    }
+    public function feedback(): HasOne
+    {
+        return $this->hasOne(Feedback::class);
     }
 }

@@ -17,6 +17,7 @@ use App\Http\Controllers\MesaController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\ComprobanteController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\RecetaController;
 use App\Http\Controllers\ProveedorController;
@@ -43,19 +44,11 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
 });
-
 Route::get('/comprar_productos', function () {
     return view('productos');
 })->name("comprar_productos");
 
-// Route::get('/metodo_pago', function () {
-//    return view('metodoPagos.pago');
-// })->name("metodo_pago");
-// Route::post('/metodo_pago', [UtilController::class, 'metodoPago'])->middleware('auth')->name("metodo_pago.post");
-
-
-//------------------
- Route::get('/metodo_pagoU', function () {
+Route::get('/metodo_pagoU', function () {
     return view('metodoPagos.pago');
 })->name("metodo_pago");
 Route::post('/metodo_pagoU', [UtilController::class, 'metodoPago'])->middleware('auth')->name("metodo_pago.post");
@@ -221,7 +214,7 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
     Route::delete('nota_venta/{id}', [NotaDeVentaController::class, 'destroy'])->middleware('permiso:eliminar nota_venta')->name('nota_venta.destroy');
     // Pagos
     Route::get('pagos', [PagoController::class, 'index'])->middleware('permiso:ver pagos')->name('pagos.index');
-    // Metodos de Pago //COMENTAR SI PASA ALGO
+    // Metodos de Pago
     Route::get('metodo_pago', [MetodoPagoController::class, 'index'])->name('metodo_pago.index');
     Route::get('metodo_pago/create', [MetodoPagoController::class, 'create'])->name('metodo_pago.create');
     Route::post('metodo_pago', [MetodoPagoController::class, 'store'])->name('metodo_pago.store');
@@ -235,7 +228,7 @@ Route::middleware(['auth', 'rol:administrador,personal'])->group(function () {
 });
 
 // Rutas para ADMINISTRADOR, PERSONAL y CLIENTES
-Route::middleware(['auth', 'rol:administrador,personal,clientes'])->group(function () {
+Route::middleware(['auth', 'rol:administrador,personal,cliente'])->group(function () {
 
     // Usuarios (también con ClienteController, puedes separarlo luego)
     Route::get('usuarios', [ClienteController::class, 'index'])->middleware('permiso:ver usuarios')->name('usuarios.index');
@@ -245,6 +238,9 @@ Route::middleware(['auth', 'rol:administrador,personal,clientes'])->group(functi
     Route::get('usuarios/{id}/edit', [ClienteController::class, 'edit'])->middleware('permiso:editar usuarios')->name('usuarios.edit');
     Route::put('usuarios/{id}', [ClienteController::class, 'update'])->middleware('permiso:editar usuarios')->name('usuarios.update');
     Route::delete('usuarios/{id}', [ClienteController::class, 'destroy'])->middleware('permiso:eliminar usuarios')->name('usuarios.destroy');
+    Route::resource('feedbacks', FeedbackController::class)->only([
+        'index', 'create', 'store', 'edit', 'update', 'destroy'
+    ]);
 });
 
 
@@ -268,7 +264,7 @@ Route::middleware(['guest'])->group(function () {
      
     Route::post('/reset-password', [AuthController::class, 'resetPassword'])
      ->name('password.update');
-
+    
 });
 
 

@@ -56,6 +56,7 @@ class UtilController extends Controller
             'Pagos' => 'pagos',
             'Metodos de Pago' => 'metodo_pago',
             'Comprobantes' => 'comprobantes',
+            'Gestionar feedbacks' => 'feedbacks',
         ];
 
         return collect($modelStrings)->mapWithKeys(function ($value, $key) {
